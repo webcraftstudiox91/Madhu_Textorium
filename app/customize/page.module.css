@@ -1,0 +1,638 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-top: 76px;
+}
+
+/* ── Top bar ─────────────────────────────────────────────────────── */
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-soft);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+  font-weight: 500;
+}
+.backLink:hover { color: var(--accent); }
+
+.pageTitle {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.topBarRight { width: 100px; }
+
+/* ── Step Progress — NOT sticky ──────────────────────────────────── */
+.stepProgress {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 24px 0;
+  /* position: static — no longer sticky */
+}
+
+.stepBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stepCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.stepLabel {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  transition: color 0.3s;
+}
+
+.stepLine {
+  width: 48px;
+  height: 2px;
+  background: var(--border-subtle);
+  margin: 0 8px;
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+
+.stepLineDone { background: var(--accent); }
+
+.stepActive .stepCircle {
+  border-color: var(--accent);
+  background: var(--accent-pale);
+  color: var(--accent);
+  box-shadow: 0 0 16px var(--accent-shadow);
+}
+.stepActive .stepLabel { color: var(--accent); }
+
+.stepDone .stepCircle {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+[data-theme="dark"] .stepDone .stepCircle { color: var(--bg); }
+.stepDone .stepLabel { color: var(--text-secondary); }
+
+/* ── Step Content ────────────────────────────────────────────────── */
+.stepContent {
+  max-width: 900px;
+  margin: 0 auto;
+  animation: fadeUp 0.4s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.stepHeader {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.stepTitle {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.stepSubtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.reqStar {
+  color: var(--accent);
+  font-weight: 700;
+  margin-left: 1px;
+}
+
+/* ── Step Nav ────────────────────────────────────────────────────── */
+.stepNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ── Toast Notification ──────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--accent);
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.24), 0 0 0 1px var(--accent-shadow);
+  min-width: 320px;
+  max-width: 520px;
+  animation: slideUp 0.3s cubic-bezier(0.22,1,0.36,1);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.toastIcon { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+
+.toastBody { flex: 1; }
+
+.toastMessage {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.toastFields {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.toastFields li {
+  font-size: 0.75rem;
+  background: var(--accent-pale);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  border-radius: 100px;
+  padding: 2px 10px;
+  font-weight: 600;
+}
+
+.toastClose {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent-pale);
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.toastClose:hover { color: var(--accent); }
+
+/* ── Step 1: Garments with images ───────────────────────────────── */
+.garmentGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.garmentCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  background: var(--bg-card);
+  border: 2px solid var(--border-subtle);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+  overflow: hidden;
+  padding-bottom: 14px;
+}
+
+.garmentCard:hover {
+  border-color: var(--accent-border);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card);
+}
+
+.garmentSelected {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 24px var(--accent-shadow);
+}
+
+/* Image area — aspect ratio 2:3 */
+.garmentImageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2/3;
+  overflow: hidden;
+}
+
+.garmentLabel {
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 10px;
+  padding: 0 8px;
+}
+
+.garmentDesc {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  padding: 0 8px;
+  margin-top: 2px;
+}
+
+.garmentCheck {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  z-index: 2;
+}
+[data-theme="dark"] .garmentCheck { color: var(--bg); }
+
+/* ── Step 2: Measurements ─────────────────────────────────────────── */
+
+/* Garment chip (pre-selected garment) */
+.garmentChip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--accent-pale);
+  border: 1.5px solid var(--accent-border);
+  border-radius: 100px;
+  padding: 8px 20px 8px 8px;
+  margin: 0 auto 28px;
+  width: fit-content;
+}
+
+.garmentChipImgWrap {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid var(--accent-border);
+}
+
+.garmentChipLabel {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.garmentChipChange {
+  margin-left: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: none;
+  border: 1px solid var(--accent-border);
+  border-radius: 100px;
+  padding: 3px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.garmentChipChange:hover { background: var(--accent-border); }
+
+.measureAlert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--accent-pale);
+  border: 1px solid var(--accent-border);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+.measureAlert svg { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+
+.measureGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.measureSection {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.measureSectionTitle {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.measureFields {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.unitBadge {
+  float: right;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: var(--accent-pale);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 1px 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.fieldHint {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* ── Step 3: Photos ─────────────────────────────────────────────── */
+.photoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.photoCard { display: flex; flex-direction: column; gap: 12px; }
+
+.photoDropZone {
+  aspect-ratio: 3/4;
+  border: 2px dashed var(--accent-border);
+  border-radius: 16px;
+  background: var(--bg-card);
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.photoDropZone:hover { border-color: var(--accent); background: var(--accent-pale); }
+.photoHasImage { border-style: solid; border-color: var(--accent); }
+
+.photoPreview { width: 100%; height: 100%; object-fit: cover; }
+
+.photoPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.photoPlaceholderText { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; }
+.photoPlaceholderHint { font-size: 0.72rem; color: var(--text-muted); }
+
+.photoUploading {
+  position: absolute; inset: 0;
+  background: rgba(10,10,10,0.8);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px;
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+.photoSuccess {
+  position: absolute; top: 12px; right: 12px;
+  width: 32px; height: 32px;
+  background: #25D366; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+}
+
+.photoLabel { display: flex; align-items: center; justify-content: space-between; }
+
+.photoLabelText {
+  font-size: 0.85rem; font-weight: 600;
+  color: var(--text-primary);
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+.photoRemove {
+  display: flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: rgba(229,62,62,0.1);
+  color: #E53E3E; cursor: pointer; transition: all 0.2s;
+  border: none;
+}
+.photoRemove:hover { background: rgba(229,62,62,0.25); }
+
+.photoError { font-size: 0.75rem; color: var(--accent); }
+
+.photoTip {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 18px;
+  background: var(--accent-pale);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  color: var(--text-muted);
+  font-size: 0.85rem; line-height: 1.6;
+}
+.photoTip svg { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+
+/* ── Step 4: Details ─────────────────────────────────────────────── */
+.detailsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* ── Step 5: Review ─────────────────────────────────────────────── */
+.reviewCard {
+  background: var(--bg-card);
+  border: 1px solid var(--accent-border);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.reviewSection {
+  padding: 22px 28px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.reviewSection:last-child { border-bottom: none; }
+
+.reviewSectionTitle {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.reviewValue { font-size: 0.95rem; color: var(--text-primary); line-height: 1.6; }
+
+.reviewMeasures {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.reviewMeasureItem {
+  display: flex; justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--accent-pale);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+
+.reviewMeasureVal { font-weight: 600; color: var(--text-primary); }
+
+.missingWarn {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: rgba(201,168,76,0.08);
+  border: 1px solid var(--accent-border);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: var(--accent);
+  line-height: 1.5;
+}
+.missingWarn svg { flex-shrink: 0; margin-top: 2px; }
+
+.reviewPhotos { display: flex; gap: 16px; }
+
+.reviewPhoto { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+
+.reviewPhotoImg {
+  width: 80px; height: 100px;
+  object-fit: cover; border-radius: 8px;
+  border: 1px solid var(--accent-border);
+}
+
+.reviewPhotoEmpty {
+  width: 80px; height: 100px;
+  background: var(--bg-soft);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; color: var(--text-muted); text-align: center;
+}
+
+.reviewPhotoLabel {
+  font-size: 0.7rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+
+.waNotice {
+  display: flex; align-items: flex-start;
+  gap: 16px; padding: 18px 24px;
+  background: rgba(37,211,102,0.05);
+  border: 1px solid rgba(37,211,102,0.2);
+  border-radius: 14px; margin-bottom: 16px;
+  font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6;
+}
+
+/* ── Spinner ─────────────────────────────────────────────────────── */
+.spinner {
+  width: 20px; height: 20px;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .garmentGrid    { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .measureFields  { grid-template-columns: 1fr 1fr; }
+  .photoGrid      { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .stepBar        { overflow-x: auto; padding: 0 16px; justify-content: flex-start; }
+  .stepLabel      { display: none; }
+  .stepLine       { width: 24px; }
+  .reviewMeasures { grid-template-columns: 1fr 1fr; }
+  .detailsGrid    { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .garmentGrid    { grid-template-columns: repeat(2, 1fr); }
+  .measureFields  { grid-template-columns: 1fr; }
+  .photoGrid      { grid-template-columns: 1fr 1fr 1fr; }
+  .stepNav        { flex-direction: column; gap: 12px; }
+  .stepNav :global(.btn) { width: 100%; justify-content: center; }
+  .toast          { min-width: 90vw; max-width: 95vw; }
+}

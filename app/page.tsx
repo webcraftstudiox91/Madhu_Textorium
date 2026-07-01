@@ -1,66 +1,560 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
 
-export default function Home() {
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { FaWhatsapp, FaStar, FaQuoteLeft } from 'react-icons/fa';
+import {
+  FiArrowRight, FiCheck, FiChevronLeft, FiChevronRight,
+  FiPhone, FiMapPin, FiSmartphone, FiScissors, FiAward,
+} from 'react-icons/fi';
+import { MdStraighten, MdCamera, MdDone } from 'react-icons/md';
+import { GiSewingNeedle, GiClothes, GiTie } from 'react-icons/gi';
+import { PiScissors, PiRuler } from 'react-icons/pi';
+import { useCart } from '@/context/CartContext';
+import { useTheme } from '@/context/ThemeContext';
+import ProductModal, { Product } from '@/components/ProductModal/ProductModal';
+import styles from './page.module.css';
+
+// ─── DATA ────────────────────────────────────────────────
+const USP_ITEMS = [
+  { icon: <PiScissors size={24} />, title: 'Custom Design Clothes', desc: 'Every garment crafted to your exact vision' },
+  { icon: <PiRuler size={24} />, title: 'Custom Measurements', desc: 'Tailor-precise fit with full body measurements' },
+  { icon: <FaWhatsapp size={24} />, title: 'WhatsApp Ordering', desc: 'Send enquiries directly from your phone' },
+  { icon: <FiAward size={24} />, title: 'Perfect Fit Guarantee', desc: 'Not satisfied? We re-stitch until flawless' },
+];
+
+const CATEGORIES = [
+  { id: 'suits', name: 'Suits', image: '/images/cat-suits.png', desc: 'Classic & Modern Cuts' },
+  { id: 'shirts', name: 'Shirts', image: '/images/cat-shirts.png', desc: 'Premium Formal & Casual' },
+  { id: 'pants', name: 'Pants', image: '/images/cat-pants.png', desc: 'Perfect Drape & Fit' },
+  { id: 'modi-coat', name: 'Modi Coat', image: '/images/cat-modi-coat.png', desc: 'Refined Indian Formal' },
+  { id: 'jodhpuri', name: 'Jodhpuri', image: '/images/cat-jodhpuri.png', desc: 'Regal Traditional Wear' },
+  { id: 'sherwani', name: 'Sherwani', image: '/images/cat-sherwani.png', desc: 'Wedding & Ceremony' },
+  { id: 'blazer', name: 'Blazers', image: '/images/cat-blazer.png', desc: 'Smart Business Style' },
+  { id: 'kurta', name: 'Kurta', image: '/images/cat-kurta.png', desc: 'Festive & Ethnic Grace' },
+];
+
+const PRODUCTS: Product[] = [
+  { id: 'p1', name: 'Royal Heritage Suit', category: 'Suits', price: 8500, isTopSeller: true },
+  { id: 'p2', name: 'Executive Slim Fit Suit', category: 'Suits', price: 7200 },
+  { id: 'p3', name: 'Premium Oxford Shirt', category: 'Shirts', price: 2400 },
+  { id: 'p4', name: 'Modi Coat Ensemble', category: 'Modi Coat', price: 5500 },
+  { id: 'p5', name: 'Jodhpuri Classic', category: 'Jodhpuri', price: 9500, isTopSeller: true },
+  { id: 'p6', name: 'Grand Sherwani Set', category: 'Sherwani', price: 12000, isTopSeller: true },
+  { id: 'p7', name: 'Business Blazer', category: 'Blazers', price: 5800 },
+  { id: 'p8', name: 'Festive Kurta Pajama', category: 'Kurta', price: 3200 },
+  { id: 'p9', name: 'Merino Formal Trousers', category: 'Pants', price: 2800 },
+  { id: 'p10', name: 'Three-Piece Prestige Suit', category: 'Suits', price: 14000, isTopSeller: true },
+];
+
+const TOP_SELLERS = PRODUCTS.filter(p => p.isTopSeller);
+
+const REVIEWS = [
+  { name: 'Ravi Shankar P.', role: 'Corporate Professional, Vizag', review: 'Absolutely stunning suit! The fit was perfect on the first try. Madhu Textorium\'s craftsmanship is unmatched in all of Visakhapatnam.', stars: 5, initials: 'RS' },
+  { name: 'Anil Kumar M.', role: 'Wedding Client', review: 'Got my Sherwani done for my wedding — every single guest complimented it. The fabric quality and stitching precision is top notch!', stars: 5, initials: 'AK' },
+  { name: 'Suresh Babu G.', role: 'Business Owner', review: 'I\'ve been a regular customer for 6 years. The Modi coat they made for my daughter\'s wedding was the talk of the ceremony.', stars: 5, initials: 'SB' },
+  { name: 'Venkat Rao T.', role: 'Software Engineer', review: 'Ordered 3 shirts via WhatsApp with my measurements. All three fit like they were made by machine — with human precision!', stars: 5, initials: 'VR' },
+  { name: 'Prakash Reddy', role: 'Retired IAS Officer', review: 'The Jodhpuri suit for my son\'s wedding was breathtaking. Attention to every detail — buttons, lining, embroidery — simply masterful.', stars: 5, initials: 'PR' },
+];
+
+const HOW_TO_STEPS = [
+  { step: '01', title: 'Choose Your Garment', desc: 'Select from suits, shirts, sherwani, kurta, Modi coats and more.', icon: <GiClothes size={28} /> },
+  { step: '02', title: 'Share Measurements', desc: 'Fill in tailor-level measurements — chest, waist, shoulder, sleeve and more.', icon: <MdStraighten size={28} /> },
+  { step: '03', title: 'Upload Body Photos', desc: 'Send 3 photos — front, back, and side profile for a flawless custom fit.', icon: <MdCamera size={28} /> },
+  { step: '04', title: 'WhatsApp Confirmation', desc: 'All details arrive on WhatsApp. We confirm, discuss fabric, and get started.', icon: <MdDone size={28} /> },
+];
+
+const WHATSAPP_NUMBER = '919030727629';
+const waLink = (msg: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+
+export default function HomePage() {
+  const { addItem } = useCart();
+  const { theme } = useTheme();
+  const [reviewIdx, setReviewIdx] = useState(0);
+  const [heroLoaded, setHeroLoaded] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const reviewTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Pick hero image based on current theme
+  const heroSrc = theme === 'light' ? '/images/hero-light.png' : '/images/hero.png';
+
+  // Reset hero animation when theme switches
+  useEffect(() => {
+    setHeroLoaded(false);
+    const t = setTimeout(() => setHeroLoaded(true), 50);
+    return () => clearTimeout(t);
+  }, [theme]);
+
+  const resetReviewTimer = useCallback(() => {
+    if (reviewTimerRef.current) clearInterval(reviewTimerRef.current);
+    reviewTimerRef.current = setInterval(() => {
+      setReviewIdx(i => (i + 1) % REVIEWS.length);
+    }, 5000);
+  }, []);
+
+  useEffect(() => {
+    resetReviewTimer();
+    return () => { if (reviewTimerRef.current) clearInterval(reviewTimerRef.current); };
+  }, [resetReviewTimer]);
+
+  const prevReview = () => { resetReviewTimer(); setReviewIdx(i => (i - 1 + REVIEWS.length) % REVIEWS.length); };
+  const nextReview = () => { resetReviewTimer(); setReviewIdx(i => (i + 1) % REVIEWS.length); };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main>
+      {/* Product Modal */}
+      <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+
+      {/* ═══ HERO ═══ */}
+      <section id="home" className={styles.hero}>
+        <div className={styles.heroBg}>
+          <Image
+            key={heroSrc}
+            src={heroSrc}
+            alt="Premium fabrics and garments at Madhu Textorium"
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+            onLoad={() => setHeroLoaded(true)}
+          />
+        </div>
+        <div className={`${styles.heroOverlay} ${heroLoaded ? styles.heroOverlayLoaded : ''}`} />
+        <div className={`${styles.heroContent} ${heroLoaded ? styles.heroContentLoaded : ''}`}>
+          <div className={styles.heroLabel}>
+            <span className={styles.heroDot} />
+            Visakhapatnam&apos;s Premier Tailoring House
+            <span className={styles.heroDot} />
+          </div>
+          <h1 className={styles.heroTitle}>
+            Where Fabric Meets
+            <br />
+            <span className={styles.heroTitleAccent}>Flawless Craftsmanship</span>
+          </h1>
+          <p className={styles.heroSubtitle}>
+            Custom-tailored suits, sherwanis, Modi coats &amp; more — stitched to your exact body
+            measurements for an unmatched perfect fit, every time.
           </p>
+          <div className={styles.heroActions}>
+            <Link href="/customize" className="btn btn-primary">
+              <FiScissors size={15} />
+              Start Customizing
+            </Link>
+            <a href={waLink("Hello! I'd like to enquire about your clothing services at Madhu Textorium.")}
+              target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">
+              <FaWhatsapp size={17} />
+              WhatsApp Us
+            </a>
+          </div>
+          <div className={styles.heroStats}>
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatNum}>15+</span>
+              <span className={styles.heroStatLabel}>Years of Excellence</span>
+            </div>
+            <div className={styles.heroStatDivider} />
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatNum}>5000+</span>
+              <span className={styles.heroStatLabel}>Happy Customers</span>
+            </div>
+            <div className={styles.heroStatDivider} />
+            <div className={styles.heroStat}>
+              <span className={styles.heroStatNum}>100%</span>
+              <span className={styles.heroStatLabel}>Custom Fit</span>
+            </div>
+          </div>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className={styles.heroScroll}>
+          <div className={styles.scrollLine} />
+          <span className={styles.scrollText}>Scroll</span>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* ═══ USP STRIP ═══ */}
+      <section className={styles.uspStrip}>
+        <div className="container">
+          <div className={styles.uspGrid}>
+            {USP_ITEMS.map((item, i) => (
+              <div key={i} className={styles.uspItem}>
+                <div className={styles.uspIcon}>{item.icon}</div>
+                <div className={styles.uspText}>
+                  <p className={styles.uspTitle}>{item.title}</p>
+                  <p className={styles.uspDesc}>{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ ABOUT ═══ */}
+      <section id="about" className={`section ${styles.aboutSection}`}>
+        <div className="container">
+          <div className={styles.aboutGrid}>
+            <div className={styles.aboutImage}>
+              <div className={styles.aboutImageWrap}>
+                <Image src="/images/about-measurement.png" alt="Custom tailoring measurement guide" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
+                <div className={styles.aboutImageOverlay} />
+              </div>
+              <div className={styles.aboutBadge}>
+                <FiAward size={18} />
+                <span>Premium Quality</span>
+              </div>
+            </div>
+            <div className={styles.aboutContent}>
+              <span className="section-label">Our Philosophy</span>
+              <h2 className="section-title" style={{ textAlign: 'left', marginBottom: 14 }}>
+                We Believe in <span>Custom Clothes</span>
+              </h2>
+              <p className={styles.aboutText}>
+                At Madhu Textorium, clothing is more than fabric — it is an expression of your identity,
+                confidence, and grace. For over a decade, we have crafted garments that fit not just
+                your body, but your personality.
+              </p>
+              <p className={styles.aboutText}>
+                Our master tailors bring decades of expertise in traditional Indian menswear — from royal
+                sherwanis and Jodhpuri suits to modern executive blazers — using premium fabrics from the finest mills.
+              </p>
+              <div className={styles.aboutPoints}>
+                {['Hand-selected premium fabrics', 'Master tailors with 20+ years experience', 'Perfect fit or free re-stitching', 'Traditional meets modern design'].map((pt, i) => (
+                  <div key={i} className={styles.aboutPoint}>
+                    <FiCheck className={styles.aboutCheck} />
+                    <span>{pt}</span>
+                  </div>
+                ))}
+              </div>
+              <div className={styles.aboutActions}>
+                <Link href="/customize" className="btn btn-primary"><FiScissors size={14} /> Book Customization</Link>
+                <a href={waLink('Hello! I want to know more about Madhu Textorium.')} target="_blank" rel="noopener noreferrer" className="btn btn-outline">
+                  <FaWhatsapp size={15} /> Learn More
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ HOW IT WORKS ═══ */}
+      <section className={`section ${styles.howSection}`}>
+        <div className="container">
+          <div className="section-header">
+            <span className="section-label">Simple Process</span>
+            <h2 className="section-title">How to Get Your <span>Perfect Fit</span></h2>
+            <p className="section-subtitle">Our streamlined process ensures your custom garment is crafted with utmost precision.</p>
+          </div>
+          <div className={styles.howGrid}>
+            {HOW_TO_STEPS.map((step, i) => (
+              <div key={i} className={styles.howCard}>
+                <div className={styles.howStepNum}>{step.step}</div>
+                <div className={styles.howIcon}>{step.icon}</div>
+                <h3 className={styles.howTitle}>{step.title}</h3>
+                <p className={styles.howDesc}>{step.desc}</p>
+                {i < HOW_TO_STEPS.length - 1 && <div className={styles.howArrow}><FiArrowRight size={14} /></div>}
+              </div>
+            ))}
+          </div>
+          <div className={styles.howMeasureImage}>
+            <Image src="/images/how-to-measure.png" alt="How to take body measurement photos - front, back and side view guide"
+              width={900} height={380} style={{ objectFit: 'contain', width: '100%', height: 'auto' }} />
+            <div className={styles.howMeasureCaption}>
+              <GiSewingNeedle size={15} style={{ color: 'var(--accent)', flexShrink: 0 }} />
+              <p><strong>Tip:</strong> Stand straight in fitted clothing with good lighting for all 3 photos — Front, Back &amp; Side views.</p>
+            </div>
+          </div>
+          <div style={{ textAlign: 'center', marginTop: 44 }}>
+            <Link href="/customize" className="btn btn-primary" style={{ padding: '14px 36px', fontSize: '0.9rem' }}>
+              <FiScissors size={15} /> Start My Custom Order
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ CATEGORIES ═══ */}
+      <section id="categories" className={`section ${styles.categoriesSection}`}>
+        <div className="container">
+          <div className="section-header">
+            <span className="section-label">Shop by Category</span>
+            <h2 className="section-title">Our <span>Collections</span></h2>
+            <p className="section-subtitle">From formal suits to regal sherwanis — every category comes with full customization.</p>
+          </div>
+          <div className={styles.categoriesGrid}>
+            {CATEGORIES.map(cat => (
+              <div key={cat.id} className={styles.categoryCard}
+                onClick={() => setSelectedProduct({ id: cat.id, name: cat.name, category: cat.name, price: 0 })}
+                role="button" tabIndex={0}
+                onKeyDown={e => e.key === 'Enter' && setSelectedProduct({ id: cat.id, name: cat.name, category: cat.name, price: 0 })}
+              >
+                <div className={styles.categoryImage}>
+                  <Image src={cat.image} alt={cat.name} fill sizes="(max-width: 480px) 50vw, (max-width: 1024px) 25vw, 12vw" style={{ objectFit: 'cover', transition: 'transform 0.6s ease' }} />
+                  <div className={styles.categoryOverlay} />
+                </div>
+                <div className={styles.categoryInfo}>
+                  <h3 className={styles.categoryName}>{cat.name}</h3>
+                  <p className={styles.categoryDesc}>{cat.desc}</p>
+                  <span className={styles.customFitBadge}>
+                    <FiScissors size={11} /> Custom Fit Available
+                  </span>
+                  <button className={styles.exploreBtn}>
+                    Explore <FiArrowRight size={12} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ TOP SELLERS ═══ */}
+      <section className={`section ${styles.topSellersSection}`}>
+        <div className="container">
+          <div className="section-header">
+            <span className="section-label">Best Sellers</span>
+            <h2 className="section-title">Customer <span>Favourites</span></h2>
+          </div>
+          <div className={styles.topSellersGrid}>
+            {TOP_SELLERS.map(product => (
+              <div key={product.id} className={styles.topSellerCard} role="button" tabIndex={0}
+                onClick={() => setSelectedProduct(product)}
+                onKeyDown={e => e.key === 'Enter' && setSelectedProduct(product)}>
+                <div className={styles.topSellerImage}>
+                  <div className="product-placeholder">
+                    <GiTie size={48} className="product-placeholder-icon" />
+                    <span className="product-placeholder-text">{product.category}</span>
+                  </div>
+                  <span className={styles.topSellerBadge}>Top Seller</span>
+                </div>
+                <div className={styles.topSellerInfo}>
+                  <p className={styles.topSellerCategory}>{product.category}</p>
+                  <h3 className={styles.topSellerName}>{product.name}</h3>
+                  <div className={styles.topSellerFooter}>
+                    <span className={styles.topSellerPrice}>₹{product.price.toLocaleString()}</span>
+                    <button
+                      className={styles.viewDetailsBtnInline}
+                      onClick={e => { e.stopPropagation(); setSelectedProduct(product); }}
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ ALL PRODUCTS ═══ */}
+      <section id="products" className={`section ${styles.productsSection}`}>
+        <div className="container">
+          <div className="section-header">
+            <span className="section-label">Our Products</span>
+            <h2 className="section-title">The <span>Full Collection</span></h2>
+            <p className="section-subtitle">Each piece is available for customization. Click any item to explore colours, fabrics and details.</p>
+          </div>
+          <div className={styles.productsGrid}>
+            {PRODUCTS.map(product => (
+              <div key={product.id} className={styles.productCard}
+                onClick={() => setSelectedProduct(product)} role="button" tabIndex={0}
+                onKeyDown={e => e.key === 'Enter' && setSelectedProduct(product)}>
+                <div className={styles.productImageWrap}>
+                  <div className="product-placeholder">
+                    <GiClothes size={40} className="product-placeholder-icon" />
+                    <span className="product-placeholder-text">{product.category}</span>
+                  </div>
+                </div>
+                <div className={styles.productInfo}>
+                  <span className={styles.productCategory}>{product.category}</span>
+                  <h3 className={styles.productName}>{product.name}</h3>
+                  <div className={styles.productFooter}>
+                    <span className={styles.productPrice}>₹{product.price.toLocaleString()}</span>
+                    <button className={styles.viewDetailsBtnSmall}
+                      onClick={e => { e.stopPropagation(); setSelectedProduct(product); }}>
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ CUSTOMIZATION CTA ═══ */}
+      <section className={styles.customizeCta}>
+        <div className="container">
+          <div className={styles.ctaInner}>
+            <div className={styles.ctaContent}>
+              <span className="section-label">Bespoke Service</span>
+              <h2 className={styles.ctaTitle}>Design Your Perfect Garment</h2>
+              <p className={styles.ctaSubtitle}>
+                Tell us your style. Share your measurements. Upload your photos.
+                We&apos;ll stitch it to perfection and notify you via WhatsApp.
+              </p>
+              <div className={styles.ctaFeatures}>
+                {['Select Garment Type', 'Enter Measurements', 'Upload 3 Photos', 'Receive on WhatsApp'].map((f, i) => (
+                  <div key={i} className={styles.ctaFeature}>
+                    <span className={styles.ctaFeatureNum}>{i + 1}</span>
+                    <span>{f}</span>
+                  </div>
+                ))}
+              </div>
+              <Link href="/customize" className="btn btn-primary" style={{ marginTop: 8 }}>
+                <FiScissors size={15} /> Open Customization Tool
+              </Link>
+            </div>
+            <div className={styles.ctaDecor}>
+              <div className={styles.ctaCircle}>
+                <GiSewingNeedle size={52} className={styles.ctaNeedle} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ REVIEWS ═══ */}
+      <section id="reviews" className={`section ${styles.reviewsSection}`}>
+        <div className="container">
+          <div className="section-header">
+            <span className="section-label">Reviews</span>
+            <h2 className="section-title">What Our <span>Customers Say</span></h2>
+          </div>
+          <div className={styles.reviewsSlider}>
+            <button className={styles.reviewNav} onClick={prevReview} aria-label="Previous review"><FiChevronLeft size={20} /></button>
+            <div className={styles.reviewCard}>
+              <FaQuoteLeft className={styles.reviewQuote} size={28} />
+              <div className="stars">
+                {Array.from({ length: REVIEWS[reviewIdx].stars }).map((_, i) => <FaStar key={i} />)}
+              </div>
+              <p className={styles.reviewText}>&ldquo;{REVIEWS[reviewIdx].review}&rdquo;</p>
+              <div className={styles.reviewAuthor}>
+                <div className={styles.reviewAvatar}>{REVIEWS[reviewIdx].initials}</div>
+                <div>
+                  <p className={styles.reviewName}>{REVIEWS[reviewIdx].name}</p>
+                  <p className={styles.reviewRole}>{REVIEWS[reviewIdx].role}</p>
+                </div>
+              </div>
+            </div>
+            <button className={styles.reviewNav} onClick={nextReview} aria-label="Next review"><FiChevronRight size={20} /></button>
+          </div>
+          <div className={styles.reviewDots}>
+            {REVIEWS.map((_, i) => (
+              <button key={i} className={`${styles.reviewDot} ${i === reviewIdx ? styles.reviewDotActive : ''}`}
+                onClick={() => { resetReviewTimer(); setReviewIdx(i); }} aria-label={`Review ${i + 1}`} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ CONTACT ═══ */}
+      <section id="contact" className={`section ${styles.contactSection}`}>
+        <div className="container">
+          <div className="section-header">
+            <span className="section-label">Get In Touch</span>
+            <h2 className="section-title">Visit or <span>Contact Us</span></h2>
+            <p className="section-subtitle">Drop by our store in Visakhapatnam or reach us instantly on WhatsApp.</p>
+          </div>
+          <div className={styles.contactGrid}>
+            <div className={styles.contactInfo}>
+              <div className={styles.contactCard}>
+                <div className={styles.contactIconWrap}><FiMapPin size={20} /></div>
+                <div>
+                  <h4 className={styles.contactCardTitle}>Our Store</h4>
+                  <p className={styles.contactCardText}>Door No 27-4-30, Beside Super Bazar,<br />Main Road, Poorna Market,<br />Visakhapatnam – 530001, Andhra Pradesh</p>
+                </div>
+              </div>
+              <div className={styles.contactCard}>
+                <div className={styles.contactIconWrap}><FiPhone size={20} /></div>
+                <div>
+                  <h4 className={styles.contactCardTitle}>Call Us</h4>
+                  <a href="tel:+919030727629" className={styles.contactPhone}>+91 90307 27629</a>
+                  <a href="tel:+919441866018" className={styles.contactPhone}>+91 94418 66018</a>
+                </div>
+              </div>
+              <div className={styles.contactCard}>
+                <div className={styles.contactIconWrap} style={{ color: '#25D366', borderColor: 'rgba(37,211,102,0.3)', background: 'rgba(37,211,102,0.08)' }}>
+                  <FaWhatsapp size={20} />
+                </div>
+                <div>
+                  <h4 className={styles.contactCardTitle}>WhatsApp Enquiry</h4>
+                  <p className={styles.contactCardText}>Send measurements, customization requirements, or any queries directly on WhatsApp.</p>
+                  <a href={waLink("Hello Madhu Textorium! I'd like to make an enquiry.")} target="_blank" rel="noopener noreferrer"
+                    className="btn btn-whatsapp" style={{ marginTop: 14 }}>
+                    <FaWhatsapp size={17} /> Chat on WhatsApp
+                  </a>
+                </div>
+              </div>
+              <div className={styles.contactCard}>
+                <div className={styles.contactIconWrap}><FiSmartphone size={20} /></div>
+                <div>
+                  <h4 className={styles.contactCardTitle}>Business Hours</h4>
+                  <p className={styles.contactCardText}>Monday – Saturday: 10:00 AM – 8:00 PM<br />Sunday: 11:00 AM – 6:00 PM</p>
+                </div>
+              </div>
+            </div>
+            <div className={styles.mapWrap}>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3800.617867399296!2d83.29652!3d17.72197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a39433b0df30693%3A0x8daee6f7fb8f69d0!2sPoorna%20Market%2C%20Visakhapatnam%2C%20Andhra%20Pradesh%20530001!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                width="100%" height="100%"
+                style={{ border: 0, borderRadius: 16, minHeight: 440 }}
+                allowFullScreen loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Madhu Textorium – Poorna Market, Visakhapatnam"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ FOOTER ═══ */}
+      <footer className={styles.footer}>
+        <div className="container">
+          <div className={styles.footerGrid}>
+            <div className={styles.footerBrand}>
+              <div className={styles.footerLogo}>
+                <Image src="/image.png" alt="Madhu Textorium Logo" width={56} height={56}
+                  style={{ borderRadius: '50%', border: '2px solid var(--accent)', background: '#000', flexShrink: 0 }} />
+                <div>
+                  <p className={styles.footerBrandName}>Madhu Textorium</p>
+                  <p className={styles.footerBrandTag}>Suitings &amp; Shirtings</p>
+                </div>
+              </div>
+              <p className={styles.footerTagline}>
+                Crafting premium custom menswear in Visakhapatnam for over a decade.
+                Every stitch, a promise of perfection.
+              </p>
+              <div className={styles.footerPhones}>
+                <a href="tel:+919030727629" className={styles.footerPhone}><FiPhone size={13} /> 90307 27629</a>
+                <a href="tel:+919441866018" className={styles.footerPhone}><FiPhone size={13} /> 94418 66018</a>
+              </div>
+            </div>
+
+            <div className={styles.footerContact}>
+              <h4 className={styles.footerLinkTitle}>Visit Our Store</h4>
+              <div className={styles.footerStoreBody}>
+                <p className={styles.footerAddress}>
+                  Door No 27-4-30, Beside Super Bazar,<br />
+                  Main Road, Poorna Market,<br />
+                  Visakhapatnam – 530001, AP
+                </p>
+                <div className={styles.footerHoursBlock}>
+                  <p className={styles.footerHours}>Mon – Sat: 10 AM – 8 PM</p>
+                  <p className={styles.footerHours}>Sunday: 11 AM – 6 PM</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.footerBottom}>
+            <p>© {new Date().getFullYear()} Madhu Textorium. All rights reserved.</p>
+            <p>Crafted with care for Visakhapatnam</p>
+          </div>
+        </div>
+      </footer>
+
+      {/* Floating WhatsApp */}
+      <a href={waLink("Hello! I'd like to make an enquiry at Madhu Textorium.")} target="_blank" rel="noopener noreferrer"
+        className="whatsapp-float" aria-label="Chat on WhatsApp">
+        <FaWhatsapp />
+      </a>
+    </main>
   );
 }
