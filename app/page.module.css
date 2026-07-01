@@ -1227,9 +1227,13 @@
   .aboutActions { flex-direction: column; }
   .aboutActions .btn { justify-content: center; }
 
-  /* How grid - single column */
-  .howGrid { grid-template-columns: 1fr; }
-  .howCard { border-radius: 14px !important; margin-bottom: 2px; }
+  /* How grid - 2×2 square on small mobile */
+  .howGrid { grid-template-columns: 1fr 1fr; }
+  .howCard { border-radius: 0; }
+  .howCard:first-child { border-radius: 14px 0 0 0 !important; }
+  .howCard:nth-child(2) { border-radius: 0 14px 0 0 !important; }
+  .howCard:nth-child(3) { border-radius: 0 0 0 14px !important; }
+  .howCard:last-child   { border-radius: 0 0 14px 0 !important; }
 
   /* Categories - 2 col kept but smaller */
   .categoriesGrid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
