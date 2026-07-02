@@ -69,8 +69,7 @@
   background: var(--bg-soft, #f5f5f5);
   border-radius: 20px 0 0 20px;
   overflow: hidden;
-  aspect-ratio: 3 / 4;
-  align-self: stretch;
+  /* No aspect-ratio on desktop — stretches to fill modal body height naturally */
 }
 
 .imageWrap {
@@ -267,7 +266,12 @@
 @media (max-width: 700px) {
   .modal { width: 96vw; border-radius: 16px; }
   .body { grid-template-columns: 1fr; }
-  .imageSide { border-radius: 16px 16px 0 0; }
+  /* On mobile the image stacks on top — give it 3:4 portrait ratio */
+  .imageSide {
+    border-radius: 16px 16px 0 0;
+    aspect-ratio: 3 / 4;
+    width: 100%;
+  }
   .imageWrap { min-height: 220px; }
   .infoSide { padding: 20px 18px; }
   .productName { font-size: 1.35rem; }

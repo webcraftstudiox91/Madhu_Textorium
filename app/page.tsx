@@ -299,7 +299,7 @@ export default function HomePage() {
                 onKeyDown={e => e.key === 'Enter' && setSelectedProduct({ id: cat.id, name: cat.name, category: cat.name, price: 0, image: cat.image })}
               >
                 <div className={styles.categoryImage}>
-                  <Image src={cat.image} alt={cat.name} fill sizes="(max-width: 480px) 50vw, (max-width: 1024px) 25vw, 12vw" style={{ objectFit: 'cover', transition: 'transform 0.6s ease' }} />
+                  <Image src={cat.image} alt={cat.name} fill sizes="(max-width: 480px) 50vw, (max-width: 1024px) 25vw, 25vw" style={{ objectFit: 'cover', transition: 'transform 0.6s ease' }} />
                   <div className={styles.categoryOverlay} />
                 </div>
                 <div className={styles.categoryInfo}>
