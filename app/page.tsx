@@ -326,14 +326,17 @@ export default function HomePage() {
             <h2 className="section-title">Customer <span>Favourites</span></h2>
           </div>
           <div className={styles.topSellersGrid}>
-            {TOP_SELLERS.map(product => (
+            {TOP_SELLERS.map(product => {
+              const favImg = (product as Product & { imageFav?: string }).imageFav || product.image;
+              const openModal = () => setSelectedProduct({ ...product, image: favImg });
+              return (
               <div key={product.id} className={styles.topSellerCard} role="button" tabIndex={0}
-                onClick={() => setSelectedProduct(product)}
-                onKeyDown={e => e.key === 'Enter' && setSelectedProduct(product)}>
+                onClick={openModal}
+                onKeyDown={e => e.key === 'Enter' && openModal()}>
                 <div className={styles.topSellerImage}>
-                  {(product as Product & { imageFav?: string }).imageFav || product.image ? (
+                  {favImg ? (
                     <Image
-                      src={(product as Product & { imageFav?: string }).imageFav || product.image!}
+                      src={favImg}
                       alt={product.name}
                       fill
                       sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -353,14 +356,15 @@ export default function HomePage() {
                   <div className={styles.topSellerFooter}>
                     <button
                       className={styles.viewDetailsBtnInline}
-                      onClick={e => { e.stopPropagation(); setSelectedProduct(product); }}
+                      onClick={e => { e.stopPropagation(); openModal(); }}
                     >
                       View Details
                     </button>
                   </div>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
