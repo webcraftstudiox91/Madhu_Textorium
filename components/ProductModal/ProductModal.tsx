@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { FiX, FiScissors, FiCheck } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
@@ -15,6 +16,7 @@ export interface Product {
   category: string;
   price: number;
   image?: string;
+  imageFav?: string;
   description?: string;
   colors?: string[];
   fabrics?: string[];
@@ -96,10 +98,20 @@ export default function ProductModal({ product, onClose }: Props) {
           {/* Image side */}
           <div className={styles.imageSide}>
             <div className={styles.imageWrap}>
-              <div className={styles.imagePlaceholder}>
-                <GiClothes size={64} style={{ color: 'var(--accent)', opacity: 0.35 }} />
-                <span className={styles.imagePlaceholderText}>{product.category}</span>
-              </div>
+              {product.image ? (
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  style={{ objectFit: 'cover', objectPosition: 'top' }}
+                />
+              ) : (
+                <div className={styles.imagePlaceholder}>
+                  <GiClothes size={64} style={{ color: 'var(--accent)', opacity: 0.35 }} />
+                  <span className={styles.imagePlaceholderText}>{product.category}</span>
+                </div>
+              )}
             </div>
             {product.isTopSeller && (
               <div className={styles.sellerBadge}>

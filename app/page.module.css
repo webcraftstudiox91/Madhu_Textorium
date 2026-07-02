@@ -572,6 +572,7 @@
 
 .topSellerImage {
   position: relative;
+  height: 280px;
   overflow: hidden;
 }
 
@@ -670,7 +671,7 @@
   box-shadow: var(--shadow-card);
 }
 
-.productImageWrap { position: relative; overflow: hidden; }
+.productImageWrap { position: relative; height: 240px; overflow: hidden; }
 
 .productInfo { padding: 13px; }
 

@@ -25,27 +25,41 @@ const USP_ITEMS = [
 ];
 
 const CATEGORIES = [
-  { id: 'suits', name: 'Suits', image: '/images/cat-suits.png', desc: 'Classic & Modern Cuts' },
-  { id: 'shirts', name: 'Shirts', image: '/images/cat-shirts.png', desc: 'Premium Formal & Casual' },
-  { id: 'pants', name: 'Pants', image: '/images/cat-pants.png', desc: 'Perfect Drape & Fit' },
-  { id: 'modi-coat', name: 'Modi Coat', image: '/images/cat-modi-coat.png', desc: 'Refined Indian Formal' },
-  { id: 'jodhpuri', name: 'Jodhpuri', image: '/images/cat-jodhpuri.png', desc: 'Regal Traditional Wear' },
-  { id: 'sherwani', name: 'Sherwani', image: '/images/cat-sherwani.png', desc: 'Wedding & Ceremony' },
-  { id: 'blazer', name: 'Blazers', image: '/images/cat-blazer.png', desc: 'Smart Business Style' },
-  { id: 'kurta', name: 'Kurta', image: '/images/cat-kurta.png', desc: 'Festive & Ethnic Grace' },
+  { id: 'suits', name: 'Suits', image: '/images/real/suits/suits/IMG_20260702_130035.png.jpeg', desc: 'Classic & Modern Cuts' },
+  { id: 'shirts', name: 'Shirts', image: '/images/real/shirts/shirts/IMG_20260702_134315.jpg.jpeg', desc: 'Premium Formal & Casual' },
+  { id: 'pants', name: 'Pants', image: '/images/real/pants/pants/IMG_20260702_134436.png.jpeg', desc: 'Perfect Drape & Fit' },
+  { id: 'modi-coat', name: 'Modi Coat', image: '/images/real/modi-coat/modi-coat/IMG_20260702_130607.png.jpeg', desc: 'Refined Indian Formal' },
+  { id: 'jodhpuri', name: 'Jodhpuri', image: '/images/real/jodhpuri/jodhpuri/IMG_20260702_125452.png.jpeg', desc: 'Regal Traditional Wear' },
+  { id: 'sherwani', name: 'Sherwani', image: '/images/real/sherwani/sherwani/IMG_20260702_125913.png.jpeg', desc: 'Wedding & Ceremony' },
+  { id: 'blazer', name: 'Blazers', image: '/images/real/blazers/blazers/IMG_20260702_130317.png.jpeg', desc: 'Smart Business Style' },
+  { id: 'kurta', name: 'Kurta', image: '/images/real/kurta/kurta/IMG_20260702_130159.png.jpeg', desc: 'Festive & Ethnic Grace' },
 ];
 
 const PRODUCTS: Product[] = [
-  { id: 'p1', name: 'Royal Heritage Suit', category: 'Suits', price: 8500, isTopSeller: true },
-  { id: 'p2', name: 'Executive Slim Fit Suit', category: 'Suits', price: 7200 },
-  { id: 'p3', name: 'Premium Oxford Shirt', category: 'Shirts', price: 2400 },
-  { id: 'p4', name: 'Modi Coat Ensemble', category: 'Modi Coat', price: 5500 },
-  { id: 'p5', name: 'Jodhpuri Classic', category: 'Jodhpuri', price: 9500, isTopSeller: true },
-  { id: 'p6', name: 'Grand Sherwani Set', category: 'Sherwani', price: 12000, isTopSeller: true },
-  { id: 'p7', name: 'Business Blazer', category: 'Blazers', price: 5800 },
-  { id: 'p8', name: 'Festive Kurta Pajama', category: 'Kurta', price: 3200 },
-  { id: 'p9', name: 'Merino Formal Trousers', category: 'Pants', price: 2800 },
-  { id: 'p10', name: 'Three-Piece Prestige Suit', category: 'Suits', price: 14000, isTopSeller: true },
+  { id: 'p1', name: 'Royal Heritage Suit', category: 'Suits', price: 8500, isTopSeller: true,
+    image: '/images/real/suits/royal-heritage-suit-2/IMG_20260702_130407.png.jpeg',
+    imageFav: '/images/real/suits/royal-heritage-suit-1/IMG_20260702_130252.png.jpeg' },
+  { id: 'p2', name: 'Executive Slim Fit Suit', category: 'Suits', price: 7200,
+    image: '/images/real/suits/executive-slim-suit/IMG_20260702_130620.png.jpeg' },
+  { id: 'p3', name: 'Premium Oxford Shirt', category: 'Shirts', price: 2400,
+    image: '/images/real/shirts/oxford-shirt/IMG_20260702_134328.png.jpeg' },
+  { id: 'p4', name: 'Modi Coat Ensemble', category: 'Modi Coat', price: 5500,
+    image: '/images/real/modi-coat/modi-coat-ensemble/IMG_20260702_130732.png.jpeg' },
+  { id: 'p5', name: 'Jodhpuri Classic', category: 'Jodhpuri', price: 9500, isTopSeller: true,
+    image: '/images/real/jodhpuri/jodhpuri-classic-2/IMG_20260702_130858.png.jpeg',
+    imageFav: '/images/real/jodhpuri/jodhpuri-classic-1/IMG_20260702_130529.png.jpeg' },
+  { id: 'p6', name: 'Grand Sherwani Set', category: 'Sherwani', price: 12000, isTopSeller: true,
+    image: '/images/real/sherwani/grand-sherwani-2/IMG_20260702_125944.png.jpeg',
+    imageFav: '/images/real/sherwani/grand-sherwani-1/IMG_20260702_130111.png.jpeg' },
+  { id: 'p7', name: 'Business Blazer', category: 'Blazers', price: 5800,
+    image: '/images/real/blazers/business-blazer/IMG_20260702_125737.png.jpeg' },
+  { id: 'p8', name: 'Festive Kurta Pajama', category: 'Kurta', price: 3200,
+    image: '/images/real/kurta/festive-kurta/IMG_20260702_130351.png.jpeg' },
+  { id: 'p9', name: 'Merino Formal Trousers', category: 'Pants', price: 2800,
+    image: '/images/real/pants/merino-trousers/IMG_20260702_134403.png.jpeg' },
+  { id: 'p10', name: 'Three-Piece Prestige Suit', category: 'Suits', price: 14000, isTopSeller: true,
+    image: '/images/real/suits/three-piece-suit-2/IMG_20260702_125853.png.jpeg',
+    imageFav: '/images/real/suits/three-piece-suit-1/IMG_20260702_130224.png.jpeg' },
 ];
 
 const TOP_SELLERS = PRODUCTS.filter(p => p.isTopSeller);
@@ -317,10 +331,20 @@ export default function HomePage() {
                 onClick={() => setSelectedProduct(product)}
                 onKeyDown={e => e.key === 'Enter' && setSelectedProduct(product)}>
                 <div className={styles.topSellerImage}>
-                  <div className="product-placeholder">
-                    <GiTie size={48} className="product-placeholder-icon" />
-                    <span className="product-placeholder-text">{product.category}</span>
-                  </div>
+                  {(product as Product & { imageFav?: string }).imageFav || product.image ? (
+                    <Image
+                      src={(product as Product & { imageFav?: string }).imageFav || product.image!}
+                      alt={product.name}
+                      fill
+                      sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      style={{ objectFit: 'cover', objectPosition: 'top' }}
+                    />
+                  ) : (
+                    <div className="product-placeholder">
+                      <GiTie size={48} className="product-placeholder-icon" />
+                      <span className="product-placeholder-text">{product.category}</span>
+                    </div>
+                  )}
                   <span className={styles.topSellerBadge}>Top Seller</span>
                 </div>
                 <div className={styles.topSellerInfo}>
@@ -356,10 +380,20 @@ export default function HomePage() {
                 onClick={() => setSelectedProduct(product)} role="button" tabIndex={0}
                 onKeyDown={e => e.key === 'Enter' && setSelectedProduct(product)}>
                 <div className={styles.productImageWrap}>
-                  <div className="product-placeholder">
-                    <GiClothes size={40} className="product-placeholder-icon" />
-                    <span className="product-placeholder-text">{product.category}</span>
-                  </div>
+                  {product.image ? (
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      fill
+                      sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw"
+                      style={{ objectFit: 'cover', objectPosition: 'top' }}
+                    />
+                  ) : (
+                    <div className="product-placeholder">
+                      <GiClothes size={40} className="product-placeholder-icon" />
+                      <span className="product-placeholder-text">{product.category}</span>
+                    </div>
+                  )}
                 </div>
                 <div className={styles.productInfo}>
                   <span className={styles.productCategory}>{product.category}</span>
