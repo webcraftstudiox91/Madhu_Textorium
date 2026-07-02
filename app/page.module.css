@@ -572,8 +572,9 @@
 
 .topSellerImage {
   position: relative;
-  height: 280px;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
+  background: var(--bg-soft);
 }
 
 .topSellerBadge {
@@ -671,7 +672,7 @@
   box-shadow: var(--shadow-card);
 }
 
-.productImageWrap { position: relative; height: 240px; overflow: hidden; }
+.productImageWrap { position: relative; aspect-ratio: 3 / 4; overflow: hidden; background: var(--bg-soft); }
 
 .productInfo { padding: 13px; }
 

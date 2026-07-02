@@ -294,9 +294,9 @@ export default function HomePage() {
           <div className={styles.categoriesGrid}>
             {CATEGORIES.map(cat => (
               <div key={cat.id} className={styles.categoryCard}
-                onClick={() => setSelectedProduct({ id: cat.id, name: cat.name, category: cat.name, price: 0 })}
+                onClick={() => setSelectedProduct({ id: cat.id, name: cat.name, category: cat.name, price: 0, image: cat.image })}
                 role="button" tabIndex={0}
-                onKeyDown={e => e.key === 'Enter' && setSelectedProduct({ id: cat.id, name: cat.name, category: cat.name, price: 0 })}
+                onKeyDown={e => e.key === 'Enter' && setSelectedProduct({ id: cat.id, name: cat.name, category: cat.name, price: 0, image: cat.image })}
               >
                 <div className={styles.categoryImage}>
                   <Image src={cat.image} alt={cat.name} fill sizes="(max-width: 480px) 50vw, (max-width: 1024px) 25vw, 12vw" style={{ objectFit: 'cover', transition: 'transform 0.6s ease' }} />
@@ -337,7 +337,7 @@ export default function HomePage() {
                       alt={product.name}
                       fill
                       sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      style={{ objectFit: 'cover', objectPosition: 'top' }}
+                      style={{ objectFit: 'contain', objectPosition: 'center' }}
                     />
                   ) : (
                     <div className="product-placeholder">
@@ -351,7 +351,6 @@ export default function HomePage() {
                   <p className={styles.topSellerCategory}>{product.category}</p>
                   <h3 className={styles.topSellerName}>{product.name}</h3>
                   <div className={styles.topSellerFooter}>
-                    <span className={styles.topSellerPrice}>₹{product.price.toLocaleString()}</span>
                     <button
                       className={styles.viewDetailsBtnInline}
                       onClick={e => { e.stopPropagation(); setSelectedProduct(product); }}
@@ -386,7 +385,7 @@ export default function HomePage() {
                       alt={product.name}
                       fill
                       sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 25vw"
-                      style={{ objectFit: 'cover', objectPosition: 'top' }}
+                      style={{ objectFit: 'contain', objectPosition: 'center' }}
                     />
                   ) : (
                     <div className="product-placeholder">
@@ -399,7 +398,6 @@ export default function HomePage() {
                   <span className={styles.productCategory}>{product.category}</span>
                   <h3 className={styles.productName}>{product.name}</h3>
                   <div className={styles.productFooter}>
-                    <span className={styles.productPrice}>₹{product.price.toLocaleString()}</span>
                     <button className={styles.viewDetailsBtnSmall}
                       onClick={e => { e.stopPropagation(); setSelectedProduct(product); }}>
                       View Details

@@ -266,12 +266,13 @@
   box-shadow: 0 0 24px var(--accent-shadow);
 }
 
-/* Image area — aspect ratio 2:3 */
+/* Image area — aspect ratio 3:4 */
 .garmentImageWrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 2/3;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
+  background: var(--bg-soft, #f5f5f5);
 }
 
 .garmentLabel {

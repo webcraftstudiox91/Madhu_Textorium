@@ -8,16 +8,16 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { FiArrowLeft, FiArrowRight, FiUpload, FiCheck, FiX, FiScissors, FiInfo, FiAlertCircle } from 'react-icons/fi';
 import styles from './page.module.css';
 
-// ─── GARMENT TYPES (using AI-generated category images) ─────────────────────
+// ─── GARMENT TYPES (using real product images) ───────────────────────────────
 const GARMENT_TYPES = [
-  { id: 'shirt',     label: 'Shirt',              image: '/images/cat-shirts.png',    desc: 'Formal, casual, party wear' },
-  { id: 'suit',      label: 'Suit',               image: '/images/cat-suits.png',     desc: '2-piece, 3-piece, slim fit' },
-  { id: 'pant',      label: 'Pant / Trouser',     image: '/images/cat-pants.png',     desc: 'Formal, chinos, pleated' },
-  { id: 'modi-coat', label: 'Modi Coat',          image: '/images/cat-modi-coat.png', desc: 'Classic Indian formal' },
-  { id: 'jodhpuri',  label: 'Jodhpuri Suit',      image: '/images/cat-jodhpuri.png',  desc: 'Royal traditional wear' },
-  { id: 'sherwani',  label: 'Sherwani',           image: '/images/cat-sherwani.png',  desc: 'Wedding & ceremonies' },
-  { id: 'blazer',    label: 'Blazer',             image: '/images/cat-blazer.png',    desc: 'Casual, formal, events' },
-  { id: 'kurta',     label: 'Kurta / Kurta Pajama', image: '/images/cat-kurta.png',  desc: 'Festive, ethnic, casual' },
+  { id: 'shirt',     label: 'Shirt',              image: '/images/real/shirts/shirts/IMG_20260702_134315.jpg.jpeg',        desc: 'Formal, casual, party wear' },
+  { id: 'suit',      label: 'Suit',               image: '/images/real/suits/suits/IMG_20260702_130035.png.jpeg',          desc: '2-piece, 3-piece, slim fit' },
+  { id: 'pant',      label: 'Pant / Trouser',     image: '/images/real/pants/pants/IMG_20260702_134436.png.jpeg',          desc: 'Formal, chinos, pleated' },
+  { id: 'modi-coat', label: 'Modi Coat',          image: '/images/real/modi-coat/modi-coat/IMG_20260702_130607.png.jpeg',  desc: 'Classic Indian formal' },
+  { id: 'jodhpuri',  label: 'Jodhpuri Suit',      image: '/images/real/jodhpuri/jodhpuri/IMG_20260702_125452.png.jpeg',    desc: 'Royal traditional wear' },
+  { id: 'sherwani',  label: 'Sherwani',           image: '/images/real/sherwani/sherwani/IMG_20260702_125913.png.jpeg',    desc: 'Wedding & ceremonies' },
+  { id: 'blazer',    label: 'Blazer',             image: '/images/real/blazers/blazers/IMG_20260702_130317.png.jpeg',      desc: 'Casual, formal, events' },
+  { id: 'kurta',     label: 'Kurta / Kurta Pajama', image: '/images/real/kurta/kurta/IMG_20260702_130159.png.jpeg',       desc: 'Festive, ethnic, casual' },
 ];
 
 // ─── FABRIC & COLOUR OPTIONS ────────────────────────────────────────────────
@@ -465,7 +465,7 @@ function CustomizePageInner() {
                       alt={g.label}
                       fill
                       sizes="(max-width: 480px) 45vw, (max-width: 768px) 30vw, 12vw"
-                      style={{ objectFit: 'cover' }}
+                      style={{ objectFit: 'contain', objectPosition: 'center' }}
                     />
                   </div>
                   <span className={styles.garmentLabel}>{g.label}</span>

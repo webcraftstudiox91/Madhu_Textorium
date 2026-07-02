@@ -104,7 +104,7 @@ export default function ProductModal({ product, onClose }: Props) {
                   alt={product.name}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  style={{ objectFit: 'cover', objectPosition: 'top' }}
+                  style={{ objectFit: 'contain', objectPosition: 'center' }}
                 />
               ) : (
                 <div className={styles.imagePlaceholder}>
@@ -124,13 +124,6 @@ export default function ProductModal({ product, onClose }: Props) {
           <div className={styles.infoSide}>
             <div className={styles.categoryTag}>{product.category}</div>
             <h2 className={styles.productName}>{product.name}</h2>
-
-            {product.price > 0 && (
-              <div className={styles.priceRow}>
-                <span className={styles.price}>₹{product.price.toLocaleString()}</span>
-                <span className={styles.priceNote}>Starting price · Custom fit included</span>
-              </div>
-            )}
 
             <p className={styles.description}>
               {product.description ||
