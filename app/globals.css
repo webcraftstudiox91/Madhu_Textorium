@@ -89,6 +89,13 @@
   --shadow-card: 0 4px 24px rgba(0,0,0,0.1);
   --shadow-hover: 0 12px 40px rgba(0,0,0,0.15);
   --shadow-accent: 0 0 30px rgba(139,26,26,0.1);
+
+  /* ── Brand Brown — from Madhu Textorium bag (≈10% accent) ── */
+  --brand-brown: #2C1208;
+  --brand-brown-soft: #3E1A0A;
+  --brand-brown-pale: rgba(44,18,8,0.07);
+  --brand-brown-border: rgba(44,18,8,0.18);
+  --brand-brown-shadow: rgba(44,18,8,0.12);
 }
 
 /* ============================================================
@@ -414,4 +421,64 @@ input, textarea, select { font-family: var(--font-sans); }
   .section { padding: 48px 0; }
   .container { padding: 0 16px; }
   .section-title { font-size: 1.5rem; }
+}
+
+/* ============================================================
+   BRAND BROWN ACCENTS — Light Theme Only (≈10% usage)
+   Bag colour: #2C1208 (deep espresso brown)
+   Applied sparingly to reinforce brand identity without
+   overwhelming the warm cream palette.
+   ============================================================ */
+
+/* Scrollbar thumb — a tiny but ever-present brand touch */
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: var(--brand-brown);
+}
+
+/* Section-label pill — swaps border to brand-brown, keeps text crimson */
+[data-theme="light"] .section-label {
+  border-color: var(--brand-brown-border);
+  background: var(--brand-brown-pale);
+}
+
+/* Section divider line — thin top border on alternating sections */
+[data-theme="light"] .section + .section {
+  border-top: 1px solid var(--brand-brown-border);
+}
+
+/* Card hover — brand-brown border glow on hover */
+[data-theme="light"] .card:hover {
+  border-color: var(--brand-brown-border);
+  box-shadow: 0 12px 40px var(--brand-brown-shadow), var(--shadow-hover);
+}
+
+/* Footer top rule — grounding brown hairline */
+[data-theme="light"] footer {
+  border-top: 2px solid var(--brand-brown);
+}
+
+/* USP / Trust strip — left accent bar using brand brown */
+[data-theme="light"] .usp-item,
+[data-theme="light"] [class*="usItem"],
+[data-theme="light"] [class*="trustItem"] {
+  border-left: 3px solid var(--brand-brown);
+  padding-left: 16px;
+}
+
+/* Product placeholder gradient tint — subtle brand-brown warmth */
+[data-theme="light"] .product-placeholder {
+  background: linear-gradient(
+    135deg,
+    var(--bg-charcoal) 0%,
+    var(--bg-charcoal-light) 60%,
+    rgba(44,18,8,0.08) 100%
+  );
+}
+
+/* Form focus ring — brand-brown ring when inputs are focused */
+[data-theme="light"] .form-input:focus,
+[data-theme="light"] .form-select:focus,
+[data-theme="light"] .form-textarea:focus {
+  border-color: var(--brand-brown);
+  box-shadow: 0 0 0 3px var(--brand-brown-pale);
 }

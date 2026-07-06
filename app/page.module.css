@@ -734,6 +734,13 @@
   border-bottom: 1px solid var(--accent-border);
 }
 
+/* ── Light theme: Bespoke section gets brand-brown bag colour as bg ── */
+[data-theme="light"] .customizeCta {
+  background: linear-gradient(135deg, #2C1208 0%, #3E1A0A 50%, #2C1208 100%);
+  border-top: 1px solid rgba(201,168,76,0.25);
+  border-bottom: 1px solid rgba(201,168,76,0.25);
+}
+
 .ctaInner {
   display: flex;
   align-items: center;
@@ -752,11 +759,21 @@
   line-height: 1.15;
 }
 
+/* Title turns gold/cream on dark brown bg */
+[data-theme="light"] .customizeCta .ctaTitle {
+  color: #F5EDD5;
+}
+
 .ctaSubtitle {
   color: var(--text-secondary);
   font-size: 0.975rem;
   line-height: 1.75;
   margin-bottom: 28px;
+}
+
+/* Subtitle softens to warm off-white */
+[data-theme="light"] .customizeCta .ctaSubtitle {
+  color: rgba(245,237,213,0.75);
 }
 
 .ctaFeatures {
@@ -774,6 +791,11 @@
   color: var(--text-secondary);
 }
 
+/* Feature text — pale gold */
+[data-theme="light"] .customizeCta .ctaFeature {
+  color: rgba(245,237,213,0.8);
+}
+
 .ctaFeatureNum {
   width: 26px;
   height: 26px;
@@ -787,6 +809,20 @@
   font-size: 0.72rem;
   font-weight: 700;
   color: var(--accent);
+}
+
+/* Step number bubbles — gold ring & gold text on brown */
+[data-theme="light"] .customizeCta .ctaFeatureNum {
+  background: rgba(201,168,76,0.12);
+  border-color: rgba(201,168,76,0.4);
+  color: #C9A84C;
+}
+
+/* Section-label pill inside the section */
+[data-theme="light"] .customizeCta .section-label {
+  background: rgba(201,168,76,0.12);
+  border-color: rgba(201,168,76,0.35);
+  color: #C9A84C;
 }
 
 .ctaDecor { flex-shrink: 0; }
@@ -803,9 +839,20 @@
   animation: spin-slow 20s linear infinite;
 }
 
+/* Decorative circle — gold glow on dark brown */
+[data-theme="light"] .customizeCta .ctaCircle {
+  background: radial-gradient(circle, rgba(201,168,76,0.18) 0%, transparent 70%);
+  border-color: rgba(201,168,76,0.4);
+}
+
 .ctaNeedle {
   color: var(--accent);
   animation: spin-slow 20s linear infinite reverse;
+}
+
+/* Needle icon — warm gold */
+[data-theme="light"] .customizeCta .ctaNeedle {
+  color: #C9A84C;
 }
 
 @keyframes spin-slow {
