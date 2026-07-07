@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { FiX, FiScissors, FiCheck } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { MdColorLens, MdStraighten, MdStar } from 'react-icons/md';
@@ -61,6 +62,7 @@ const DEFAULT_FEATURES  = [
 ];
 
 export default function ProductModal({ product, onClose }: Props) {
+  const router = useRouter();
   const { addItem } = useCart();
   const onCloseRef = useRef(onClose);
   useEffect(() => { onCloseRef.current = onClose; });
@@ -122,7 +124,9 @@ export default function ProductModal({ product, onClose }: Props) {
         /* Only modal was open – close it.
          * Popstate consumed the last entry; nothing left to clean up. */
         closedByBackRef.current = true;
-        onCloseRef.current();
+        setTimeout(() => {
+          onCloseRef.current();
+        }, 0);
         return null;
       });
     };
@@ -170,6 +174,17 @@ export default function ProductModal({ product, onClose }: Props) {
   const waMsg = encodeURIComponent(
     `Hello Madhu Textorium! I'm interested in the *${product.name}* (${product.category}).\n\nCould you please share more details, fabric options, and pricing?\n\nThank you.`
   );
+
+  const handleCustomizeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    closedByBackRef.current = true; // prevent cleanup go(-1)
+    window.history.go(-1); // remove the modal history entry
+    
+    setTimeout(() => {
+      router.push(`/customize?category=${product.category.toLowerCase().replace(/\s+/g, '-')}&product=${product.id}`);
+      onClose();
+    }, 50);
+  };
 
   const handleAddToCart = () => {
     addItem({ id: product.id, name: product.name, category: product.category, price: product.price, quantity: 1 });
@@ -297,14 +312,13 @@ export default function ProductModal({ product, onClose }: Props) {
 
             {/* Actions */}
             <div className={styles.actions}>
-              <Link
-                href={`/customize?category=${product.category.toLowerCase().replace(/\s+/g, '-')}&product=${product.id}`}
+              <button
+                onClick={handleCustomizeClick}
                 className="btn btn-primary"
-                onClick={onClose}
                 style={{ flex: 1, justifyContent: 'center' }}
               >
                 <FiScissors size={15} /> Customize &amp; Order
-              </Link>
+              </button>
               <a
                 href={`https://wa.me/${WHATSAPP_NUMBER}?text=${waMsg}`}
                 target="_blank"

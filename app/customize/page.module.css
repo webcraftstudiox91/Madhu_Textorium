@@ -710,19 +710,22 @@
 /* ── Integrated Section Sizing Guide Headers ────────────────────────── */
 .sectionGuideHeader {
   display: flex;
-  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
   background: var(--bg-soft);
   border: 1.5px solid var(--accent-border);
   border-radius: 16px;
-  padding: 16px;
+  padding: 24px;
   margin-bottom: 24px;
-  align-items: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
 }
 
 .sectionGuideImageWrap {
-  width: 160px;
-  height: 120px;
+  width: 100%;
+  max-width: 420px;
+  height: 240px;
   position: relative;
   background: #111; /* Dark background to match image background */
   border-radius: 10px;
@@ -734,10 +737,11 @@
 }
 
 .sectionGuideContent {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .sectionGuideLabel {
@@ -747,12 +751,12 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--accent);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .sectionGuideText {
   font-size: 0.82rem;
-  line-height: 1.45;
+  line-height: 1.5;
   color: var(--text-secondary);
   margin: 0;
 }
