@@ -38,6 +38,8 @@ export default function Navbar() {
     }
   };
 
+  const R2 = process.env.NEXT_PUBLIC_CLOUDFLARE_R2_URL || '';
+
   return (
     <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
       <div className={styles.inner}>
@@ -45,7 +47,7 @@ export default function Navbar() {
         <Link href="/" className={styles.logo} onClick={() => handleNavClick('#home')}>
           <div className={styles.logoIcon}>
             <Image
-              src="/image.png"
+              src={`${R2}/images/logo.png`}
               alt="Madhu Textorium Logo"
               width={52}
               height={52}
