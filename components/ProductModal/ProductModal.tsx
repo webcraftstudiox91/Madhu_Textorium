@@ -32,6 +32,7 @@ export interface Product {
   isTopSeller?: boolean;
   fabricSwatches?: FabricSwatch[];
   sketchImage?: string;
+  images?: string[];
 }
 
 interface Props {
@@ -69,10 +70,14 @@ export default function ProductModal({ product, onClose }: Props) {
 
   /* Which swatch is open in the lightbox (null = lightbox closed) */
   const [lightboxSwatch, setLightboxSwatch] = useState<FabricSwatch | null>(null);
+  const [activeImg, setActiveImg] = useState<string>('');
 
-  /* Reset lightbox whenever the product changes */
+  /* Reset lightbox and main image whenever the product changes */
   useEffect(() => {
     setLightboxSwatch(null);
+    if (product) {
+      setActiveImg(product.image || '');
+    }
   }, [product?.id]);
 
   /* Body scroll lock */
@@ -207,9 +212,9 @@ export default function ProductModal({ product, onClose }: Props) {
           {/* ══ IMAGE SIDE ══ */}
           <div className={styles.imageSide}>
             <div className={styles.imageWrap}>
-              {product.image ? (
+              {activeImg ? (
                 <Image
-                  src={product.image}
+                  src={activeImg}
                   alt={product.name}
                   fill
                   sizes="(max-width: 768px) 100vw, 340px"
@@ -227,6 +232,19 @@ export default function ProductModal({ product, onClose }: Props) {
               <div className={styles.sellerBadge}><MdStar size={14} /> Top Seller</div>
             )}
 
+            {product.images && product.images.length > 1 && (
+              <div className={styles.galleryThumbs}>
+                {product.images.map((img, idx) => (
+                  <button
+                    key={idx}
+                    className={`${styles.galleryThumb} ${activeImg === img ? styles.galleryThumbActive : ''}`}
+                    onClick={() => setActiveImg(img)}
+                  >
+                    <Image src={img} alt="Thumbnail" fill sizes="48px" style={{ objectFit: 'cover' }} />
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* ══ INFO SIDE ══ */}

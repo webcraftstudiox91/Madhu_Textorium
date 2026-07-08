@@ -179,7 +179,8 @@ export default function HomePage() {
               colors: p.colors || [],
               fabrics: p.fabrics || [],
               features: p.features || [],
-              fabricSwatches: productSwatches
+              fabricSwatches: productSwatches,
+              images: [p.image, p.image_fav].filter(Boolean) as string[],
             };
           });
 
@@ -398,15 +399,39 @@ export default function HomePage() {
           </div>
           <div className={styles.categoriesGrid}>
             {CATEGORIES.map(cat => {
-              const openCategory = () => setSelectedProduct({
-                id: cat.id,
-                name: cat.name,
-                category: cat.name,
-                price: 0,
-                image: cat.image,
-                fabricSwatches: FABRIC_DATA[cat.name] || [],
-                sketchImage: SKETCH_MAP[cat.name] || undefined,
-              });
+              const openCategory = () => {
+                const matchingProducts = products.filter(p => p.category.toLowerCase() === cat.name.toLowerCase());
+                
+                // Deduplicate swatches by swatch image URL
+                const swatchMap = new Map();
+                matchingProducts.forEach(p => {
+                  p.fabricSwatches?.forEach(sw => {
+                    swatchMap.set(sw.image, sw);
+                  });
+                });
+                const swatches = Array.from(swatchMap.values());
+
+                // Find dynamic sketch or fallback
+                const sketch = matchingProducts.find(p => p.sketchImage)?.sketchImage || SKETCH_MAP[cat.name] || undefined;
+
+                // Collect category hero image + matching product images as alternative views
+                const categoryImages = [
+                  cat.image,
+                  ...matchingProducts.flatMap(p => [p.image, p.imageFav]).filter(Boolean)
+                ] as string[];
+                const uniqueImages = Array.from(new Set(categoryImages));
+
+                setSelectedProduct({
+                  id: cat.id,
+                  name: cat.name,
+                  category: cat.name,
+                  price: 0,
+                  image: cat.image,
+                  fabricSwatches: swatches,
+                  sketchImage: sketch,
+                  images: uniqueImages,
+                });
+              };
               return (
               <div key={cat.id} className={styles.categoryCard}
                 onClick={openCategory}
@@ -444,7 +469,11 @@ export default function HomePage() {
           <div className={styles.topSellersGrid}>
             {topSellers.map(product => {
               const favImg = (product as Product & { imageFav?: string }).imageFav || product.image;
-              const openModal = () => setSelectedProduct({ ...product, image: favImg });
+              const openModal = () => setSelectedProduct({
+                ...product,
+                image: favImg,
+                images: [product.image, product.imageFav].filter(Boolean) as string[],
+              });
               return (
               <div key={product.id} className={styles.topSellerCard} role="button" tabIndex={0}
                 onClick={openModal}
