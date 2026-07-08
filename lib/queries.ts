@@ -73,17 +73,10 @@ export async function getProductWithSwatches(productId: string): Promise<{ produ
     return null;
   }
 
-  const { data: catProducts } = await supabase
-    .from('products')
-    .select('id')
-    .eq('category', product.category);
-
-  const productIds = catProducts?.map(pr => pr.id) || [productId];
-
   const { data: swatches, error: sError } = await supabase
     .from('fabric_swatches')
     .select('*')
-    .in('product_id', productIds)
+    .eq('product_id', productId)
     .eq('is_visible', true)
     .order('created_at', { ascending: true });
 

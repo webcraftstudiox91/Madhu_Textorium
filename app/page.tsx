@@ -156,10 +156,7 @@ export default function HomePage() {
           // Map database records to the UI Product model
           const enriched = (dbProducts || []).map(p => {
             const productSwatches = (dbSwatches || [])
-              .filter(sw => {
-                const swatchProduct = dbProducts.find(prod => prod.id === sw.product_id);
-                return swatchProduct && swatchProduct.category === p.category && sw.is_visible !== false;
-              })
+              .filter(sw => sw.product_id === p.id && sw.is_visible !== false)
               .map(sw => ({
                 id: sw.id,
                 name: sw.name,
