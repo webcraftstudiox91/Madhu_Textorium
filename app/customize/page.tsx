@@ -714,6 +714,42 @@ function CustomizePageInner() {
     }
 
     msg += `\n━━━━━━━━━━━━━━━━━━━━\n📍 Submitted via Madhu Textorium Website`;
+
+    // ── Append Tailor Card ─────────────────────────────────────────────────────
+    msg += `\n\n\n\n\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `✂️ *FOR TAILOR (Copy & Forward)*\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+    msg += `👔 *Garment:* ${selectedGarment?.label || garment}\n\n`;
+
+    msg += `📏 *MEASUREMENTS:*\n━━━━━━━━━━━━━━━━━━━━\n`;
+    sections.forEach(section => {
+      const filled = section.fields.filter(f => measurements[f.key]);
+      if (filled.length > 0) {
+        msg += `\n*${section.title}:*\n`;
+        filled.forEach(f => {
+          const val  = measurements[f.key];
+          const unit = f.unit === 'cm' ? ' cm' : f.unit === 'kg' ? ' kg' : '"';
+          msg += `• ${f.label}: ${val}${unit}\n`;
+        });
+      }
+    });
+
+    msg += `\n📸 *BODY PHOTOS:*\n━━━━━━━━━━━━━━━━━━━━\n`;
+    imagesList.forEach(img => {
+      if (img.url && img.url !== 'PENDING_WHATSAPP') {
+        msg += `• ${img.label}: ${img.url}\n`;
+      } else if (img.file) {
+        msg += `• ${img.label}: [Photo will be shared in this chat]\n`;
+      } else {
+        msg += `• ${img.label}: Not provided\n`;
+      }
+    });
+
+    if (notes) {
+      msg += `\n📝 *SPECIAL INSTRUCTIONS:*\n━━━━━━━━━━━━━━━━━━━━\n${notes}\n`;
+    }
+
     return encodeURIComponent(msg);
   };
 
