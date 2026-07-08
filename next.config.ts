@@ -4,8 +4,7 @@ const nextConfig: NextConfig = {
   // Disable Vercel image optimization — images are served from Cloudflare R2 CDN
   // This avoids using Vercel's 1,000 free-tier image transformations per month
   images: {
-    loader: 'custom',
-    loaderFile: './utils/imageLoader.ts',
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
