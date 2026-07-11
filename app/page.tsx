@@ -258,11 +258,6 @@ export default function HomePage() {
               <FiScissors size={15} />
               Start Customizing
             </Link>
-            <a href={waLink("Hello! I'd like to enquire about your clothing services at Madhu Textorium.")}
-              target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">
-              <FaWhatsapp size={17} />
-              WhatsApp Us
-            </a>
           </div>
           <div className={styles.heroStats}>
             <div className={styles.heroStat}>
@@ -585,6 +580,42 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ═══ PORTFOLIO ═══ */}
+      <section id="portfolio" className={`section ${styles.portfolioSection}`}>
+        <div className="container">
+          <div className="section-header">
+            <span className="section-label">Our Work</span>
+            <h2 className="section-title">Check Out Our <span>Previous Works</span></h2>
+            <p className="section-subtitle">Browse through our gallery of custom-tailored garments — each piece a testament to our craftsmanship.</p>
+          </div>
+          <a
+            href="https://photos.app.goo.gl/kLRStaGrzNJUqj6t8"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.portfolioCard}
+          >
+            <div className={styles.portfolioCardInner}>
+              <div className={styles.portfolioIconWrap}>
+                <span className={styles.portfolioGalleryIcon}>🖼️</span>
+              </div>
+              <div className={styles.portfolioCardContent}>
+                <h3 className={styles.portfolioCardTitle}>View Our Complete Gallery</h3>
+                <p className={styles.portfolioCardDesc}>
+                  Explore hundreds of custom suits, sherwanis, Modi coats, kurtas and more — all stitched at Madhu Textorium.
+                </p>
+                <span className={styles.portfolioCardCta}>
+                  Open Gallery <FiArrowRight size={14} />
+                </span>
+              </div>
+              <div className={styles.portfolioCardDecor}>
+                <div className={styles.portfolioDecorCircle1} />
+                <div className={styles.portfolioDecorCircle2} />
+              </div>
+            </div>
+          </a>
         </div>
       </section>
 

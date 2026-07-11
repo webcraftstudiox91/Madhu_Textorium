@@ -973,3 +973,76 @@
   -webkit-box-orient: vertical;
 }
 
+/* ── Add-On Cards ───────────────────────────────────────────────────── */
+.addOnCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.addOnCard:hover { border-color: var(--accent-muted); }
+
+.addOnHeader {
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.addOnToggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.addOnCheckbox {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  border: 2px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: all 0.2s;
+  color: #fff;
+}
+.addOnChecked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.addOnTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.addOnDesc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.addOnBody {
+  padding: 16px 20px 20px;
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-soft);
+}
+
+.addOnNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(var(--accent-rgb, 180,140,80), 0.08);
+  border: 1px solid rgba(var(--accent-rgb, 180,140,80), 0.2);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.addOnNote svg { flex-shrink: 0; margin-top: 1px; color: var(--accent); }

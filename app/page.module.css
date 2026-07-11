@@ -1314,3 +1314,123 @@
   .topSellersGrid { grid-template-columns: 1fr; }
   .productsGrid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ── Portfolio Section ────────────────────────────────────────────────────── */
+.portfolioSection {
+  background: var(--bg-soft);
+}
+
+.portfolioCard {
+  display: block;
+  text-decoration: none;
+  margin-top: 40px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.portfolioCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.28);
+}
+
+.portfolioCardInner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  padding: 48px 52px;
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(180,140,80,0.12) 100%);
+  border: 1px solid var(--border-subtle);
+  overflow: hidden;
+  min-height: 200px;
+}
+
+.portfolioIconWrap {
+  flex-shrink: 0;
+  width: 88px;
+  height: 88px;
+  border-radius: 20px;
+  background: rgba(180,140,80,0.15);
+  border: 1px solid rgba(180,140,80,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.portfolioGalleryIcon {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.portfolioCardContent {
+  flex: 1;
+  z-index: 1;
+}
+
+.portfolioCardTitle {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.portfolioCardDesc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  margin-bottom: 18px;
+  max-width: 500px;
+}
+
+.portfolioCardCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.03em;
+  transition: gap 0.2s;
+}
+.portfolioCard:hover .portfolioCardCta { gap: 12px; }
+
+.portfolioCardDecor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.portfolioDecorCircle1 {
+  position: absolute;
+  right: -60px;
+  top: -60px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(180,140,80,0.12) 0%, transparent 70%);
+}
+
+.portfolioDecorCircle2 {
+  position: absolute;
+  right: 80px;
+  bottom: -80px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(180,140,80,0.07) 0%, transparent 70%);
+}
+
+@media (max-width: 640px) {
+  .portfolioCardInner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 32px 28px;
+    gap: 20px;
+  }
+  .portfolioCardTitle { font-size: 1.3rem; }
+}
