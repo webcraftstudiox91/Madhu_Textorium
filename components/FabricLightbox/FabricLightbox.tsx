@@ -206,6 +206,47 @@ export default function FabricLightbox({ fabric, sketchImage, garmentName, onClo
                 Tap &quot;Try On Garment&quot; to see this fabric stitched
               </div>
             )}
+
+            {/* Vertical Zoom Slider Panel */}
+            {sketchOn && (
+              <div 
+                className={styles.zoomSliderContainer}
+                onMouseDown={e => e.stopPropagation()}
+                onMouseMove={e => e.stopPropagation()}
+                onMouseUp={e => e.stopPropagation()}
+                onTouchStart={e => e.stopPropagation()}
+                onTouchMove={e => e.stopPropagation()}
+                onTouchEnd={e => e.stopPropagation()}
+                onWheel={e => e.stopPropagation()}
+              >
+                <button 
+                  className={styles.zoomSliderBtn}
+                  onClick={() => setZoom(prev => Math.min(5.0, prev + 0.25))}
+                  aria-label="Zoom In"
+                >
+                  <FiPlus size={16} />
+                </button>
+                <div className={styles.sliderTrackWrapper}>
+                  <input
+                    type="range"
+                    min="0.5"
+                    max="5.0"
+                    step="0.05"
+                    value={zoom}
+                    onChange={e => setZoom(parseFloat(e.target.value))}
+                    className={styles.verticalRangeInput}
+                    aria-label="Zoom Level"
+                  />
+                </div>
+                <button 
+                  className={styles.zoomSliderBtn}
+                  onClick={() => setZoom(prev => Math.max(0.5, prev - 0.25))}
+                  aria-label="Zoom Out"
+                >
+                  <FiMinus size={16} />
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
