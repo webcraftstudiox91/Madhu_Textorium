@@ -393,6 +393,16 @@ const MEASUREMENT_GUIDES: Record<string, GuideData> = {
     image: `${R2}/images/measurements/measure_neck.png.jpeg`,
     description: 'Wrap the measuring tape around the base of your neck where a shirt collar would sit. Keep the tape snug but comfortable; place one finger between the tape and your neck for breathing room.'
   },
+  shoulder: {
+    title: 'Shoulder Length',
+    image: `${R2}/images/measurements/measure_shoulder.png.jpeg`,
+    description: 'Measure across the upper back from the tip of one shoulder to the tip of the other. The tape should follow the natural curve of your shoulders.'
+  },
+  shoulderLength: {
+    title: 'Shoulder Length',
+    image: `${R2}/images/measurements/measure_shoulder.png.jpeg`,
+    description: 'Measure across the upper back from the tip of one shoulder to the tip of the other. The tape should follow the natural curve of your shoulders.'
+  },
   sleeveLength: {
     title: 'Hand / Sleeve Length',
     image: `${R2}/images/measurements/measure_sleeve.png.jpeg`,
