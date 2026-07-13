@@ -133,6 +133,69 @@ const HOW_TO_STEPS = [
 const WHATSAPP_NUMBER = '919030727629';
 const waLink = (msg: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://madhutextorium.com/#localbusiness",
+      "name": "Madhu Textorium",
+      "image": "https://images.madhutextorium.com/images/logo.png",
+      "url": "https://madhutextorium.com",
+      "telephone": "+919030727629",
+      "priceRange": "INR",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Door No 27-4-30, Beside Super Bazar, Main Road, Poorna Market",
+        "addressLocality": "Visakhapatnam",
+        "addressRegion": "Andhra Pradesh",
+        "postalCode": "530002",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "17.72197",
+        "longitude": "83.29652"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ],
+          "opens": "10:00",
+          "closes": "21:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Sunday",
+          "opens": "15:00",
+          "closes": "21:00"
+        }
+      ],
+      "sameAs": [
+        "https://wa.me/919030727629"
+      ]
+    },
+    {
+      "@type": "ClothingStore",
+      "@id": "https://madhutextorium.com/#store",
+      "name": "Madhu Textorium",
+      "description": "Premium men's custom tailoring and fabric house in Visakhapatnam. Tailoring wedding sherwanis, suits, Jodhpuris, Modi coats, shirts and pants.",
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Madhu Textorium",
+        "url": "https://madhutextorium.com"
+      }
+    }
+  ]
+};
+
 export default function HomePage() {
   const { addItem } = useCart();
   const { theme } = useTheme();
@@ -245,6 +308,10 @@ export default function HomePage() {
 
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Product Modal */}
       <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
 
@@ -295,9 +362,9 @@ export default function HomePage() {
               Visakhapatnam&apos;s Premier Tailoring House
               <span className={styles.heroDetailsDot} />
             </div>
-            <h2 className={styles.heroDetailsTitle}>
+            <h1 className={styles.heroDetailsTitle}>
               Level Up <span>Your Style</span>
-            </h2>
+            </h1>
             <p className={styles.heroDetailsSubtitle}>
               Custom-tailored suits, sherwanis, Modi coats &amp; more — stitched to your exact body
               measurements for an unmatched perfect fit, every time.
@@ -368,7 +435,7 @@ export default function HomePage() {
                 onKeyDown={e => e.key === 'Enter' && openCategory()}
               >
                 <div className={styles.categoryImage}>
-                  <Image src={cat.image} alt={cat.name} fill sizes="(max-width: 480px) 50vw, (max-width: 1024px) 25vw, 25vw" style={{ objectFit: 'cover', transition: 'transform 0.6s ease' }} />
+                  <Image src={cat.image} alt={`Custom-tailored ${cat.name} in Visakhapatnam - Madhu Textorium`} fill sizes="(max-width: 480px) 50vw, (max-width: 1024px) 25vw, 25vw" style={{ objectFit: 'cover', transition: 'transform 0.6s ease' }} />
                   <div className={styles.categoryOverlay} />
                 </div>
                 <div className={styles.categoryInfo}>
@@ -411,7 +478,7 @@ export default function HomePage() {
                   {favImg ? (
                     <Image
                       src={favImg}
-                      alt={product.name}
+                      alt={`Bespoke ${product.name} wedding menswear in Visakhapatnam - Madhu Textorium`}
                       fill
                       sizes="(max-width: 480px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       style={{ objectFit: 'contain', objectPosition: 'center' }}
@@ -451,7 +518,7 @@ export default function HomePage() {
           <div className={styles.aboutGrid}>
             <div className={styles.aboutImage}>
               <div className={styles.aboutImageWrap}>
-                <Image src={`${R2}/images/about-measurement.png`} alt="Custom tailoring measurement guide" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
+                <Image src={`${R2}/images/about-measurement.png`} alt="Bespoke men's tailoring measurement guide in Vizag - Madhu Textorium" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: 'cover' }} />
                 <div className={styles.aboutImageOverlay} />
               </div>
               <div className={styles.aboutBadge}>
