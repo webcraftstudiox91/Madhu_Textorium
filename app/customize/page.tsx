@@ -551,6 +551,18 @@ function CustomizePageInner() {
   const [availableSwatches, setAvailableSwatches] = useState<DbFabricSwatch[]>([]);
   const [selectedSwatch, setSelectedSwatch] = useState<DbFabricSwatch | null>(null);
 
+  const [availableShirtSwatches, setAvailableShirtSwatches] = useState<DbFabricSwatch[]>([]);
+  const [availableKurtiSwatches, setAvailableKurtiSwatches] = useState<DbFabricSwatch[]>([]);
+  const [availablePyjamaSwatches, setAvailablePyjamaSwatches] = useState<DbFabricSwatch[]>([]);
+
+  const [selectedAddOnShirtSwatch, setSelectedAddOnShirtSwatch] = useState<DbFabricSwatch | null>(null);
+  const [selectedAddOnKurtiSwatch, setSelectedAddOnKurtiSwatch] = useState<DbFabricSwatch | null>(null);
+  const [selectedAddOnPyjamaSwatch, setSelectedAddOnPyjamaSwatch] = useState<DbFabricSwatch | null>(null);
+
+  const [addOnShirtFabric, setAddOnShirtFabric] = useState('');
+  const [addOnKurtiFabric, setAddOnKurtiFabric] = useState('');
+  const [addOnPyjamaFabric, setAddOnPyjamaFabric] = useState('');
+
   const getCategoryName = (g: string): string => {
     const map: Record<string, string> = {
       suit: 'Suits',
@@ -575,6 +587,24 @@ function CustomizePageInner() {
         setFabric('');
         setColor('');
       });
+
+      // Fetch add-on swatches
+      if (garment === 'suit') {
+        getFabricSwatchesByCategory('Shirts').then(res => setAvailableShirtSwatches(res || []));
+      } else if (garment === 'modi-coat') {
+        getFabricSwatchesByCategory('Kurta').then(res => setAvailableKurtiSwatches(res || []));
+        getFabricSwatchesByCategory('Pants').then(res => setAvailablePyjamaSwatches(res || []));
+      } else if (garment === 'kurta') {
+        getFabricSwatchesByCategory('Pants').then(res => setAvailablePyjamaSwatches(res || []));
+      }
+
+      // Reset add-on selected fabric states
+      setAddOnShirtFabric('');
+      setAddOnKurtiFabric('');
+      setAddOnPyjamaFabric('');
+      setSelectedAddOnShirtSwatch(null);
+      setSelectedAddOnKurtiSwatch(null);
+      setSelectedAddOnPyjamaSwatch(null);
     }
   }, [garment]);
 
@@ -768,10 +798,45 @@ function CustomizePageInner() {
     if (customerName)  msg += `👤 *Customer:* ${customerName}\n`;
     if (customerPhone) msg += `📞 *Phone:* ${customerPhone}\n`;
     if (customerName || customerPhone) msg += `\n`;
-    msg += `👔 *Garment:* ${selectedGarment?.label || garment}`;
-    if (garment === 'suit' && suitPieceType) msg += ` (${suitPieceType})`;
-    msg += `\n`;
+
+    let garmentText = selectedGarment?.label || garment;
+    if (garment === 'suit') {
+      const pieceInfo = suitPieceType ? ` (${suitPieceType})` : '';
+      if (suitAddShirt) {
+        garmentText = `Suit${pieceInfo} + Shirt`;
+      } else {
+        garmentText = `Suit${pieceInfo}`;
+      }
+    } else if (garment === 'modi-coat') {
+      if (modiAddKurti && modiAddPyjama) {
+        garmentText = `Kurti + Modi Coat + Pyjama`;
+      } else if (modiAddKurti) {
+        garmentText = `Kurti + Modi Coat`;
+      } else if (modiAddPyjama) {
+        garmentText = `Modi Coat + Pyjama`;
+      }
+    } else if (garment === 'kurta') {
+      if (kurtiAddPyjama) {
+        garmentText = `Kurta + Pyjama`;
+      }
+    }
+
+    msg += `👔 *Garment:* ${garmentText}\n`;
     if (fabric) msg += `🧵 *Fabric:* ${fabric}\n`;
+    if (garment === 'suit' && suitAddShirt && addOnShirtFabric) {
+      msg += `🧵 *Shirt Fabric:* ${addOnShirtFabric}\n`;
+    }
+    if (garment === 'modi-coat') {
+      if (modiAddKurti && addOnKurtiFabric) {
+        msg += `🧵 *Kurti Fabric:* ${addOnKurtiFabric}\n`;
+      }
+      if (modiAddPyjama && addOnPyjamaFabric) {
+        msg += `🧵 *Pyjama Fabric:* ${addOnPyjamaFabric}\n`;
+      }
+    }
+    if (garment === 'kurta' && kurtiAddPyjama && addOnPyjamaFabric) {
+      msg += `🧵 *Pyjama Fabric:* ${addOnPyjamaFabric}\n`;
+    }
     if (color)  msg += `🎨 *Color:* ${color}\n`;
     if (requiredDate) msg += `📅 *Required By:* ${requiredDate}\n`;
     msg += `\n`;
@@ -879,11 +944,51 @@ function CustomizePageInner() {
         if (val) activeStylePrefs[key] = val;
       });
 
+      // Add selected add-on fabrics to style preferences
+      if (garment === 'suit' && suitAddShirt && addOnShirtFabric) {
+        activeStylePrefs.addon_shirt_fabric = addOnShirtFabric;
+      }
+      if (garment === 'modi-coat') {
+        if (modiAddKurti && addOnKurtiFabric) {
+          activeStylePrefs.addon_kurti_fabric = addOnKurtiFabric;
+        }
+        if (modiAddPyjama && addOnPyjamaFabric) {
+          activeStylePrefs.addon_pyjama_fabric = addOnPyjamaFabric;
+        }
+      }
+      if (garment === 'kurta' && kurtiAddPyjama && addOnPyjamaFabric) {
+        activeStylePrefs.addon_pyjama_fabric = addOnPyjamaFabric;
+      }
+
+      // Format expanded garment description for database
+      const selectedGarment = GARMENT_TYPES.find(g => g.id === garment);
+      let garmentText = selectedGarment?.label || garment;
+      if (garment === 'suit') {
+        const pieceInfo = suitPieceType ? ` (${suitPieceType})` : '';
+        if (suitAddShirt) {
+          garmentText = `Suit${pieceInfo} + Shirt`;
+        } else {
+          garmentText = `Suit${pieceInfo}`;
+        }
+      } else if (garment === 'modi-coat') {
+        if (modiAddKurti && modiAddPyjama) {
+          garmentText = `Kurti + Modi Coat + Pyjama`;
+        } else if (modiAddKurti) {
+          garmentText = `Kurti + Modi Coat`;
+        } else if (modiAddPyjama) {
+          garmentText = `Modi Coat + Pyjama`;
+        }
+      } else if (garment === 'kurta') {
+        if (kurtiAddPyjama) {
+          garmentText = `Kurta + Pyjama`;
+        }
+      }
+
       // 3. Write order to Supabase
       await createOrder({
         customer_name: customerName,
         customer_phone: customerPhone,
-        garment_type: garment,
+        garment_type: garmentText,
         fabric_preference: fabric,
         color_preference: color || '',
         style_preferences: activeStylePrefs,
@@ -1541,6 +1646,131 @@ function CustomizePageInner() {
                   </div>
                 )}
               </div>
+
+              {/* Add-on Fabric Swatches */}
+              {garment === 'suit' && suitAddShirt && (
+                <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                  <label className="form-label">Select Shirt Fabric Swatch *</label>
+                  {availableShirtSwatches.length === 0 ? (
+                    <div style={{ padding: 16, background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius)', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                      No fabric swatches available for Shirts. You can write your custom preference in the design notes below.
+                    </div>
+                  ) : (
+                    <div className={styles.swatchSelectGrid}>
+                      {availableShirtSwatches.map(sw => (
+                        <div
+                          key={sw.id}
+                          className={`${styles.swatchSelectCard} ${selectedAddOnShirtSwatch?.id === sw.id ? styles.swatchSelectActive : ''}`}
+                          onClick={() => {
+                            setSelectedAddOnShirtSwatch(sw);
+                            setAddOnShirtFabric(sw.image);
+                          }}
+                        >
+                          <div className={styles.swatchSelectImage}>
+                            <img src={sw.image} alt="Shirt Fabric Swatch" />
+                            {selectedAddOnShirtSwatch?.id === sw.id && (
+                              <div className={styles.swatchSelectCheck}>✓</div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {garment === 'modi-coat' && modiAddKurti && (
+                <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                  <label className="form-label">Select Kurti Fabric Swatch *</label>
+                  {availableKurtiSwatches.length === 0 ? (
+                    <div style={{ padding: 16, background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius)', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                      No fabric swatches available for Kurti. You can write your custom preference in the design notes below.
+                    </div>
+                  ) : (
+                    <div className={styles.swatchSelectGrid}>
+                      {availableKurtiSwatches.map(sw => (
+                        <div
+                          key={sw.id}
+                          className={`${styles.swatchSelectCard} ${selectedAddOnKurtiSwatch?.id === sw.id ? styles.swatchSelectActive : ''}`}
+                          onClick={() => {
+                            setSelectedAddOnKurtiSwatch(sw);
+                            setAddOnKurtiFabric(sw.image);
+                          }}
+                        >
+                          <div className={styles.swatchSelectImage}>
+                            <img src={sw.image} alt="Kurti Fabric Swatch" />
+                            {selectedAddOnKurtiSwatch?.id === sw.id && (
+                              <div className={styles.swatchSelectCheck}>✓</div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {garment === 'modi-coat' && modiAddPyjama && (
+                <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                  <label className="form-label">Select Pyjama Fabric Swatch *</label>
+                  {availablePyjamaSwatches.length === 0 ? (
+                    <div style={{ padding: 16, background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius)', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                      No fabric swatches available for Pyjama. You can write your custom preference in the design notes below.
+                    </div>
+                  ) : (
+                    <div className={styles.swatchSelectGrid}>
+                      {availablePyjamaSwatches.map(sw => (
+                        <div
+                          key={sw.id}
+                          className={`${styles.swatchSelectCard} ${selectedAddOnPyjamaSwatch?.id === sw.id ? styles.swatchSelectActive : ''}`}
+                          onClick={() => {
+                            setSelectedAddOnPyjamaSwatch(sw);
+                            setAddOnPyjamaFabric(sw.image);
+                          }}
+                        >
+                          <div className={styles.swatchSelectImage}>
+                            <img src={sw.image} alt="Pyjama Fabric Swatch" />
+                            {selectedAddOnPyjamaSwatch?.id === sw.id && (
+                              <div className={styles.swatchSelectCheck}>✓</div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {garment === 'kurta' && kurtiAddPyjama && (
+                <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                  <label className="form-label">Select Pyjama Fabric Swatch *</label>
+                  {availablePyjamaSwatches.length === 0 ? (
+                    <div style={{ padding: 16, background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius)', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                      No fabric swatches available for Pyjama. You can write your custom preference in the design notes below.
+                    </div>
+                  ) : (
+                    <div className={styles.swatchSelectGrid}>
+                      {availablePyjamaSwatches.map(sw => (
+                        <div
+                          key={sw.id}
+                          className={`${styles.swatchSelectCard} ${selectedAddOnPyjamaSwatch?.id === sw.id ? styles.swatchSelectActive : ''}`}
+                          onClick={() => {
+                            setSelectedAddOnPyjamaSwatch(sw);
+                            setAddOnPyjamaFabric(sw.image);
+                          }}
+                        >
+                          <div className={styles.swatchSelectImage}>
+                            <img src={sw.image} alt="Pyjama Fabric Swatch" />
+                            {selectedAddOnPyjamaSwatch?.id === sw.id && (
+                              <div className={styles.swatchSelectCheck}>✓</div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
               <div className="form-group" style={{ gridColumn: '1 / -1' }}>
                 <label className="form-label">Required By Date *</label>
                 <input
@@ -1584,7 +1814,31 @@ function CustomizePageInner() {
               <div className={styles.reviewSection}>
                 <h3 className={styles.reviewSectionTitle}>Garment</h3>
                 <p className={styles.reviewValue}>
-                  {GARMENT_TYPES.find(g => g.id === garment)?.label}
+                  {(() => {
+                    const selectedGarment = GARMENT_TYPES.find(g => g.id === garment);
+                    let garmentText = selectedGarment?.label || garment;
+                    if (garment === 'suit') {
+                      const pieceInfo = suitPieceType ? ` (${suitPieceType})` : '';
+                      if (suitAddShirt) {
+                        garmentText = `Suit${pieceInfo} + Shirt`;
+                      } else {
+                        garmentText = `Suit${pieceInfo}`;
+                      }
+                    } else if (garment === 'modi-coat') {
+                      if (modiAddKurti && modiAddPyjama) {
+                        garmentText = `Kurti + Modi Coat + Pyjama`;
+                      } else if (modiAddKurti) {
+                        garmentText = `Kurti + Modi Coat`;
+                      } else if (modiAddPyjama) {
+                        garmentText = `Modi Coat + Pyjama`;
+                      }
+                    } else if (garment === 'kurta') {
+                      if (kurtiAddPyjama) {
+                        garmentText = `Kurta + Pyjama`;
+                      }
+                    }
+                    return garmentText;
+                  })()}
                 </p>
               </div>
 
@@ -1612,6 +1866,60 @@ function CustomizePageInner() {
                     </div>
                   )}
                   {color  && <p className={styles.reviewValue}>Color: {color}</p>}
+                </div>
+              )}
+
+              {/* Add-on fabrics review */}
+              {(addOnShirtFabric || addOnKurtiFabric || addOnPyjamaFabric) && (
+                <div className={styles.reviewSection}>
+                  <h3 className={styles.reviewSectionTitle}>Add-On Fabrics</h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 6 }}>
+                    {addOnShirtFabric && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                        {addOnShirtFabric.startsWith('http') ? (
+                          <>
+                            <img src={addOnShirtFabric} alt="Selected Shirt Fabric"
+                              style={{ width: 44, height: 44, borderRadius: 6, objectFit: 'cover', border: '1px solid var(--border-subtle)', cursor: 'zoom-in' }}
+                              onClick={() => setLightboxImg(addOnShirtFabric)}
+                            />
+                            <span className={styles.reviewValue} style={{ margin: 0 }}>Shirt Fabric: <strong>Swatch</strong></span>
+                          </>
+                        ) : (
+                          <span className={styles.reviewValue} style={{ margin: 0 }}>Shirt Fabric: <strong>{addOnShirtFabric}</strong></span>
+                        )}
+                      </div>
+                    )}
+                    {addOnKurtiFabric && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                        {addOnKurtiFabric.startsWith('http') ? (
+                          <>
+                            <img src={addOnKurtiFabric} alt="Selected Kurti Fabric"
+                              style={{ width: 44, height: 44, borderRadius: 6, objectFit: 'cover', border: '1px solid var(--border-subtle)', cursor: 'zoom-in' }}
+                              onClick={() => setLightboxImg(addOnKurtiFabric)}
+                            />
+                            <span className={styles.reviewValue} style={{ margin: 0 }}>Kurti Fabric: <strong>Swatch</strong></span>
+                          </>
+                        ) : (
+                          <span className={styles.reviewValue} style={{ margin: 0 }}>Kurti Fabric: <strong>{addOnKurtiFabric}</strong></span>
+                        )}
+                      </div>
+                    )}
+                    {addOnPyjamaFabric && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                        {addOnPyjamaFabric.startsWith('http') ? (
+                          <>
+                            <img src={addOnPyjamaFabric} alt="Selected Pyjama Fabric"
+                              style={{ width: 44, height: 44, borderRadius: 6, objectFit: 'cover', border: '1px solid var(--border-subtle)', cursor: 'zoom-in' }}
+                              onClick={() => setLightboxImg(addOnPyjamaFabric)}
+                            />
+                            <span className={styles.reviewValue} style={{ margin: 0 }}>Pyjama Fabric: <strong>Swatch</strong></span>
+                          </>
+                        ) : (
+                          <span className={styles.reviewValue} style={{ margin: 0 }}>Pyjama Fabric: <strong>{addOnPyjamaFabric}</strong></span>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
 
