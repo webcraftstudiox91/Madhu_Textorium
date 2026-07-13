@@ -1544,3 +1544,61 @@
   gap: 16px;
   flex-wrap: wrap;
 }
+
+/* ── FAQ Section ────────────────────────────────────────────────────────── */
+.faqSection {
+  background: var(--bg-soft);
+  padding: 80px 0;
+}
+.faqGrid {
+  max-width: 900px;
+  margin: 40px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.faqItem {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+.faqItem:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+.faqQuestion {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  font-family: var(--font-display);
+}
+.faqAnswer {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.faqAnswer strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Light theme FAQ styles */
+[data-theme="light"] .faqItem {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .faqItem:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+[data-theme="light"] .faqQuestion {
+  color: #1a1a1a;
+}
+[data-theme="light"] .faqAnswer {
+  color: #555555;
+}
+
