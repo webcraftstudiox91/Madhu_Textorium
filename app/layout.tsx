@@ -40,7 +40,19 @@ export const metadata: Metadata = {
     "bespoke suits Vizag",
     "designer suits Visakhapatnam",
     "sherwani stitching Vizag",
-    "Nehru jacket tailoring Visakhapatnam"
+    "Nehru jacket tailoring Visakhapatnam",
+    "Madhu Textarium",
+    "men clothing",
+    "men traditional attire",
+    "men Mehendi outfits",
+    "marriage outfits",
+    "reception outfits",
+    "groom reception wear Visakhapatnam",
+    "marriage suits Vizag",
+    "wedding dress for men",
+    "groom wedding wear in Visakhapatnam",
+    "traditional men attire",
+    "sherwanis in Vizag"
   ],
   alternates: {
     canonical: "https://madhutextorium.com",

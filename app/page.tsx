@@ -652,50 +652,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ═══ FAQ SECTION (SEO & USER GUIDE) ═══ */}
-      <section className={styles.faqSection}>
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">FAQ &amp; Guide</span>
-            <h2 className="section-title">Bespoke <span>Men Outfits Vizag</span></h2>
-            <p className="section-subtitle">Common questions regarding men clothing customization, groom styles, and traditional attire.</p>
-          </div>
-          <div className={styles.faqGrid}>
-            <div className={styles.faqItem}>
-              <h3 className={styles.faqQuestion}>Where is Madhu Textorium located and what do you offer?</h3>
-              <p className={styles.faqAnswer}>
-                <strong>Madhu Textorium</strong> (often searched as <strong>Madhu Textarium</strong> or <strong>Madhu Textorian</strong>) is premium custom tailors house located in Poorna Market, Visakhapatnam. We offer high-quality <strong>men clothing</strong> fabric and custom stitching services for all categories of premium menswear.
-              </p>
-            </div>
-            <div className={styles.faqItem}>
-              <h3 className={styles.faqQuestion}>Can I order custom groom wedding sherwanis and suits in Vizag?</h3>
-              <p className={styles.faqAnswer}>
-                Yes! We specialize in premium groom wear, designer wedding <strong>sherwanis in Vizag</strong>, three-piece executive suits, and royal Jodhpuri suits. Our master tailors ensure that every piece is crafted to your exact custom specifications.
-              </p>
-            </div>
-            <div className={styles.faqItem}>
-              <h3 className={styles.faqQuestion}>What choices are available for men traditional attire, Mehendi, or reception?</h3>
-              <p className={styles.faqAnswer}>
-                We cater to all wedding functions: elegant <strong>men Mehendi outfits</strong> (like Modi coat and Kurta pyjama sets), regal <strong>marriage outfits</strong> (Sherwani, Indo-Western ensembles), and modern <strong>reception outfits</strong> (suits, blazers, and trousers). Choose from premium fabric options and custom styles.
-              </p>
-            </div>
-            <div className={styles.faqItem}>
-              <h3 className={styles.faqQuestion}>How does customization of garments work on your website?</h3>
-              <p className={styles.faqAnswer}>
-                Our interactive customizer allows step-by-step <strong>customization of Sherwani</strong>, <strong>customization of shirt</strong>, <strong>customization of suits</strong>, <strong>customization of Pants</strong>, <strong>customization of Blazers</strong>, and <strong>customization of Kurta</strong>. Simply enter your measurements, pick your style details, and submit to launch a direct WhatsApp discussion.
-              </p>
-            </div>
-            <div className={styles.faqItem}>
-              <h3 className={styles.faqQuestion}>Do you accept custom tailoring orders from outside Visakhapatnam?</h3>
-              <p className={styles.faqAnswer}>
-                Absolutely. While we are Visakhapatnam&apos;s leading local tailor store, we accept custom orders from all corners of India and worldwide. Submit your measurements online, and we will stitch and ship the final garments directly to your doorstep.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ═══ FOOTER ═══ */}
       <footer className={styles.footer}>
         <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0' }}>
