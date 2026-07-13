@@ -87,7 +87,7 @@
 
 /* ── Nav Links ── */
 .navLinks {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 2px;
   list-style: none;
@@ -198,7 +198,7 @@
 
 /* Menu Button */
 .menuBtn {
-  display: none;
+  display: flex;
   width: 42px;
   height: 42px;
   border-radius: 50%;
@@ -218,7 +218,7 @@
 
 /* ── Mobile Menu ── */
 .mobileMenu {
-  display: none;
+  display: block;
   background: var(--navbar-bg);
   backdrop-filter: blur(20px);
   border-top: 1px solid var(--border-subtle);
@@ -270,9 +270,6 @@
 
 /* ── Responsive ── */
 @media (max-width: 960px) {
-  .navLinks { display: none; }
-  .menuBtn { display: flex; }
-  .mobileMenu { display: block; }
   .themeBtnLabel { display: none; }
 }
 

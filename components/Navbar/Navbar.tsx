@@ -11,9 +11,7 @@ import styles from './Navbar.module.css';
 const navLinks = [
   { label: 'Home', href: '#home' },
   { label: 'Collections', href: '#categories' },
-  { label: 'Products', href: '#products' },
   { label: 'Customize', href: '/customize' },
-  { label: 'Portfolio', href: '#portfolio' },
   { label: 'Reviews', href: '#reviews' },
   { label: 'About', href: '#about' },
   { label: 'Contact', href: '#contact' },
