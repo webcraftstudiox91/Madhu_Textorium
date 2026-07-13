@@ -445,40 +445,6 @@ export default function HomePage() {
 
 
 
-      {/* ═══ REVIEWS ═══ */}
-      <section id="reviews" className={`section ${styles.reviewsSection}`}>
-        <div className="container">
-          <div className="section-header">
-            <span className="section-label">Reviews</span>
-            <h2 className="section-title">What Our <span>Customers Say</span></h2>
-          </div>
-          <div className={styles.reviewsSlider}>
-            <button className={styles.reviewNav} onClick={prevReview} aria-label="Previous review"><FiChevronLeft size={20} /></button>
-            <div className={styles.reviewCard}>
-              <FaQuoteLeft className={styles.reviewQuote} size={28} />
-              <div className="stars">
-                {Array.from({ length: REVIEWS[reviewIdx].stars }).map((_, i) => <FaStar key={i} />)}
-              </div>
-              <p className={styles.reviewText}>&ldquo;{REVIEWS[reviewIdx].review}&rdquo;</p>
-              <div className={styles.reviewAuthor}>
-                <div className={styles.reviewAvatar}>{REVIEWS[reviewIdx].initials}</div>
-                <div>
-                  <p className={styles.reviewName}>{REVIEWS[reviewIdx].name}</p>
-                  <p className={styles.reviewRole}>{REVIEWS[reviewIdx].role}</p>
-                </div>
-              </div>
-            </div>
-            <button className={styles.reviewNav} onClick={nextReview} aria-label="Next review"><FiChevronRight size={20} /></button>
-          </div>
-          <div className={styles.reviewDots}>
-            {REVIEWS.map((_, i) => (
-              <button key={i} className={`${styles.reviewDot} ${i === reviewIdx ? styles.reviewDotActive : ''}`}
-                onClick={() => { resetReviewTimer(); setReviewIdx(i); }} aria-label={`Review ${i + 1}`} />
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ═══ ABOUT ═══ */}
       <section id="about" className={`section ${styles.aboutSection}`}>
         <div className="container">
@@ -522,6 +488,40 @@ export default function HomePage() {
                 </a>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ REVIEWS ═══ */}
+      <section id="reviews" className={`section ${styles.reviewsSection}`}>
+        <div className="container">
+          <div className="section-header">
+            <span className="section-label">Reviews</span>
+            <h2 className="section-title">What Our <span>Customers Say</span></h2>
+          </div>
+          <div className={styles.reviewsSlider}>
+            <button className={styles.reviewNav} onClick={prevReview} aria-label="Previous review"><FiChevronLeft size={20} /></button>
+            <div className={styles.reviewCard}>
+              <FaQuoteLeft className={styles.reviewQuote} size={28} />
+              <div className="stars">
+                {Array.from({ length: REVIEWS[reviewIdx].stars }).map((_, i) => <FaStar key={i} />)}
+              </div>
+              <p className={styles.reviewText}>&ldquo;{REVIEWS[reviewIdx].review}&rdquo;</p>
+              <div className={styles.reviewAuthor}>
+                <div className={styles.reviewAvatar}>{REVIEWS[reviewIdx].initials}</div>
+                <div>
+                  <p className={styles.reviewName}>{REVIEWS[reviewIdx].name}</p>
+                  <p className={styles.reviewRole}>{REVIEWS[reviewIdx].role}</p>
+                </div>
+              </div>
+            </div>
+            <button className={styles.reviewNav} onClick={nextReview} aria-label="Next review"><FiChevronRight size={20} /></button>
+          </div>
+          <div className={styles.reviewDots}>
+            {REVIEWS.map((_, i) => (
+              <button key={i} className={`${styles.reviewDot} ${i === reviewIdx ? styles.reviewDotActive : ''}`}
+                onClick={() => { resetReviewTimer(); setReviewIdx(i); }} aria-label={`Review ${i + 1}`} />
+            ))}
           </div>
         </div>
       </section>
@@ -588,7 +588,7 @@ export default function HomePage() {
 
       {/* ═══ FOOTER ═══ */}
       <footer className={styles.footer}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '24px 0' }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0' }}>
           <div className={styles.footerLogo} style={{ margin: 0 }}>
             <Image src={`${R2}/images/logo.png`} alt="Madhu Textorium Logo" width={56} height={56}
               style={{ borderRadius: '50%', border: '2px solid var(--accent)', background: '#000', flexShrink: 0 }} />
