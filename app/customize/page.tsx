@@ -578,11 +578,21 @@ function CustomizePageInner() {
     return map[g] || 'Suits';
   };
 
+  const deduplicateSwatches = (swatches: DbFabricSwatch[]): DbFabricSwatch[] => {
+    const seen = new Set<string>();
+    return swatches.filter(sw => {
+      const key = sw.image.trim().toLowerCase();
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  };
+
   useEffect(() => {
     if (garment) {
       const cat = getCategoryName(garment);
       getFabricSwatchesByCategory(cat).then(res => {
-        setAvailableSwatches(res || []);
+        setAvailableSwatches(deduplicateSwatches(res || []));
         setSelectedSwatch(null);
         setFabric('');
         setColor('');
@@ -590,12 +600,12 @@ function CustomizePageInner() {
 
       // Fetch add-on swatches
       if (garment === 'suit') {
-        getFabricSwatchesByCategory('Shirts').then(res => setAvailableShirtSwatches(res || []));
+        getFabricSwatchesByCategory('Shirts').then(res => setAvailableShirtSwatches(deduplicateSwatches(res || [])));
       } else if (garment === 'modi-coat') {
-        getFabricSwatchesByCategory('Kurta').then(res => setAvailableKurtiSwatches(res || []));
-        getFabricSwatchesByCategory('Pants').then(res => setAvailablePyjamaSwatches(res || []));
+        getFabricSwatchesByCategory('Kurta').then(res => setAvailableKurtiSwatches(deduplicateSwatches(res || [])));
+        getFabricSwatchesByCategory('Pants').then(res => setAvailablePyjamaSwatches(deduplicateSwatches(res || [])));
       } else if (garment === 'kurta') {
-        getFabricSwatchesByCategory('Pants').then(res => setAvailablePyjamaSwatches(res || []));
+        getFabricSwatchesByCategory('Pants').then(res => setAvailablePyjamaSwatches(deduplicateSwatches(res || [])));
       }
 
       // Reset add-on selected fabric states
