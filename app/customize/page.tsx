@@ -164,7 +164,7 @@ const GARMENT_MEASUREMENTS: Record<string, MeasurementSection[]> = {
 
   // ① Shirt — Shirt Length, Hand Length, Chest, Stomach, Hips/Seat, Collar/Neck
   shirt: [
-    { title: 'General (Optional)', fields: [
+    { title: 'General Info (Optional)', fields: [
       { key: 'height', label: 'Height', placeholder: '175', unit: 'cm', required: false },
       { key: 'weight', label: 'Weight', placeholder: '72',  unit: 'kg', required: false },
     ]},
@@ -181,7 +181,7 @@ const GARMENT_MEASUREMENTS: Record<string, MeasurementSection[]> = {
 
   // ② Pant — Length(custom), Waist, Hips/Seat, Thigh, Knee, Ankle, Rise(Kirtha), Inseam
   pant: [
-    { title: 'General (Optional)', fields: [
+    { title: 'General Info (Optional)', fields: [
       { key: 'height', label: 'Height', placeholder: '175', unit: 'cm', required: false },
       { key: 'weight', label: 'Weight', placeholder: '72',  unit: 'kg', required: false },
     ]},
@@ -193,13 +193,13 @@ const GARMENT_MEASUREMENTS: Record<string, MeasurementSection[]> = {
       { key: 'knee',       label: 'Knee',            placeholder: '16', unit: 'in', required: true,  hint: 'Circumference around knee' },
       { key: 'ankle',      label: 'Ankle',           placeholder: '13', unit: 'in', required: true,  hint: 'Circumference around ankle' },
       { key: 'rise',       label: 'Rise / Kirtha',   placeholder: '11', unit: 'in', required: true,  hint: 'Full length from front waistband center down through crotch to back waistband center' },
-      { key: 'inseam',     label: 'Inseam',          placeholder: '30', unit: 'in', required: false, hint: 'Crotch to ankle (inner seam)' },
+      { key: 'inseam',     label: 'Inseam',          placeholder: '30', unit: 'in', required: true,  hint: 'Crotch to ankle (inner seam)' },
     ]},
   ],
 
   // ③ Jodhpuri / Blazer — same upper body measurements; trouser same as Pant
   jodhpuri: [
-    { title: 'General (Optional)', fields: [
+    { title: 'General Info (Optional)', fields: [
       { key: 'height', label: 'Height', placeholder: '175', unit: 'cm', required: false },
       { key: 'weight', label: 'Weight', placeholder: '72',  unit: 'kg', required: false },
     ]},
@@ -214,19 +214,19 @@ const GARMENT_MEASUREMENTS: Record<string, MeasurementSection[]> = {
       { key: 'bicep',          label: 'Bicep',            placeholder: '14', unit: 'in', required: true,  hint: 'Upper arm circumference' },
     ]},
     { title: 'Trouser Measurements', fields: [
-      { key: 'pantLength', label: 'Length (Custom)', placeholder: '42', unit: 'in', required: false, hint: 'Waist to ankle (outseam)' },
-      { key: 'waist',      label: 'Waist',           placeholder: '34', unit: 'in', required: false, hint: 'Natural waistline' },
-      { key: 'thigh',      label: 'Thigh',           placeholder: '22', unit: 'in', required: false, hint: 'Upper thigh circumference' },
-      { key: 'knee',       label: 'Knee',            placeholder: '16', unit: 'in', required: false, hint: 'Circumference around knee' },
-      { key: 'ankle',      label: 'Ankle',           placeholder: '13', unit: 'in', required: false, hint: 'Circumference around ankle' },
-      { key: 'rise',       label: 'Rise / Kirtha',   placeholder: '11', unit: 'in', required: false, hint: 'Full length from front waistband center down through crotch to back waistband center' },
-      { key: 'inseam',     label: 'Inseam',          placeholder: '30', unit: 'in', required: false, hint: 'Crotch to ankle (inner seam)' },
+      { key: 'pantLength', label: 'Length (Custom)', placeholder: '42', unit: 'in', required: true, hint: 'Waist to ankle (outseam)' },
+      { key: 'waist',      label: 'Waist',           placeholder: '34', unit: 'in', required: true, hint: 'Natural waistline' },
+      { key: 'thigh',      label: 'Thigh',           placeholder: '22', unit: 'in', required: true, hint: 'Upper thigh circumference' },
+      { key: 'knee',       label: 'Knee',            placeholder: '16', unit: 'in', required: true, hint: 'Circumference around knee' },
+      { key: 'ankle',      label: 'Ankle',           placeholder: '13', unit: 'in', required: true, hint: 'Circumference around ankle' },
+      { key: 'rise',       label: 'Rise / Kirtha',   placeholder: '11', unit: 'in', required: true, hint: 'Full length from front waistband center down through crotch to back waistband center' },
+      { key: 'inseam',     label: 'Inseam',          placeholder: '30', unit: 'in', required: true, hint: 'Crotch to ankle (inner seam)' },
     ]},
   ],
 
   // Blazer — same upper body as Jodhpuri (no trouser section)
   blazer: [
-    { title: 'General (Optional)', fields: [
+    { title: 'General Info (Optional)', fields: [
       { key: 'height', label: 'Height', placeholder: '175', unit: 'cm', required: false },
       { key: 'weight', label: 'Weight', placeholder: '72',  unit: 'kg', required: false },
     ]},
@@ -244,7 +244,7 @@ const GARMENT_MEASUREMENTS: Record<string, MeasurementSection[]> = {
 
   // ④ Waist Coat / Modi Coat — Length, Chest, Stomach, Seat/Hip, Collar
   'modi-coat': [
-    { title: 'General (Optional)', fields: [
+    { title: 'General Info (Optional)', fields: [
       { key: 'height', label: 'Height', placeholder: '175', unit: 'cm', required: false },
       { key: 'weight', label: 'Weight', placeholder: '72',  unit: 'kg', required: false },
     ]},
@@ -260,7 +260,7 @@ const GARMENT_MEASUREMENTS: Record<string, MeasurementSection[]> = {
 
   // ⑤ Sherwani — Same as Jodhpuri/Blazer upper + Pyjama = same as Pant
   sherwani: [
-    { title: 'General (Optional)', fields: [
+    { title: 'General Info (Optional)', fields: [
       { key: 'height', label: 'Height', placeholder: '175', unit: 'cm', required: false },
       { key: 'weight', label: 'Weight', placeholder: '72',  unit: 'kg', required: false },
     ]},
@@ -277,43 +277,43 @@ const GARMENT_MEASUREMENTS: Record<string, MeasurementSection[]> = {
     { title: 'Pyjama Measurements', fields: [
       { key: 'pantLength', label: 'Length (Custom)', placeholder: '42', unit: 'in', required: true,  hint: 'Waist to ankle (outseam)' },
       { key: 'waist',      label: 'Waist',           placeholder: '34', unit: 'in', required: true,  hint: 'Natural waistline' },
-      { key: 'thigh',      label: 'Thigh',           placeholder: '22', unit: 'in', required: false, hint: 'Upper thigh circumference' },
-      { key: 'knee',       label: 'Knee',            placeholder: '16', unit: 'in', required: false, hint: 'Circumference around knee' },
-      { key: 'ankle',      label: 'Ankle',           placeholder: '13', unit: 'in', required: false, hint: 'Circumference around ankle' },
-      { key: 'rise',       label: 'Rise / Kirtha',   placeholder: '11', unit: 'in', required: false, hint: 'Full length from front waistband center down through crotch to back waistband center' },
-      { key: 'inseam',     label: 'Inseam',          placeholder: '30', unit: 'in', required: false, hint: 'Crotch to ankle (inner seam)' },
+      { key: 'thigh',      label: 'Thigh',           placeholder: '22', unit: 'in', required: true, hint: 'Upper thigh circumference' },
+      { key: 'knee',       label: 'Knee',            placeholder: '16', unit: 'in', required: true, hint: 'Circumference around knee' },
+      { key: 'ankle',      label: 'Ankle',           placeholder: '13', unit: 'in', required: true, hint: 'Circumference around ankle' },
+      { key: 'rise',       label: 'Rise / Kirtha',   placeholder: '11', unit: 'in', required: true, hint: 'Full length from front waistband center down through crotch to back waistband center' },
+      { key: 'inseam',     label: 'Inseam',          placeholder: '30', unit: 'in', required: true, hint: 'Crotch to ankle (inner seam)' },
     ]},
   ],
 
   // Kurta — same as Shirt upper + Pyjama same as Pant
   kurta: [
-    { title: 'General (Optional)', fields: [
+    { title: 'General Info (Optional)', fields: [
       { key: 'height', label: 'Height', placeholder: '175', unit: 'cm', required: false },
       { key: 'weight', label: 'Weight', placeholder: '72',  unit: 'kg', required: false },
     ]},
     { title: 'Kurta Measurements', fields: [
       { key: 'shirtLength',    label: 'Kurta Length',    placeholder: '42', unit: 'in', required: true,  hint: 'Nape to desired hem' },
-      { key: 'sleeveLength',   label: 'Hand Length',     placeholder: '25', unit: 'in', required: false, hint: 'Shoulder to wrist (leave blank for sleeveless/3-quarter)' },
+      { key: 'sleeveLength',   label: 'Hand Length',     placeholder: '25', unit: 'in', required: true, hint: 'Shoulder to wrist (leave blank for sleeveless/3-quarter)' },
       { key: 'chest',          label: 'Chest',           placeholder: '40', unit: 'in', required: true,  hint: 'Full chest circumference' },
       { key: 'stomach',        label: 'Stomach',         placeholder: '36', unit: 'in', required: true,  hint: 'Around stomach / middle waist' },
       { key: 'hips',           label: 'Hips / Seat',     placeholder: '38', unit: 'in', required: true,  hint: 'Fullest part of seat' },
       { key: 'neck',           label: 'Collar / Neck',   placeholder: '15', unit: 'in', required: true,  hint: 'Around base of neck' },
       { key: 'shoulderLength', label: 'Shoulder Length', placeholder: '18', unit: 'in', required: true,  hint: 'Across the back from shoulder point to shoulder point' },
     ]},
-    { title: 'Pyjama / Salwar Measurements (Optional)', fields: [
-      { key: 'pantLength', label: 'Length (Custom)', placeholder: '42', unit: 'in', required: false, hint: 'Waist to ankle' },
-      { key: 'waist',      label: 'Waist',           placeholder: '34', unit: 'in', required: false, hint: 'Natural waistline' },
-      { key: 'thigh',      label: 'Thigh',           placeholder: '22', unit: 'in', required: false, hint: 'Upper thigh circumference' },
-      { key: 'knee',       label: 'Knee',            placeholder: '16', unit: 'in', required: false, hint: 'Circumference around knee' },
-      { key: 'ankle',      label: 'Ankle',           placeholder: '13', unit: 'in', required: false, hint: 'Circumference around ankle' },
-      { key: 'rise',       label: 'Rise / Kirtha',   placeholder: '11', unit: 'in', required: false, hint: 'Full length from front waistband center down through crotch to back waistband center' },
-      { key: 'inseam',     label: 'Inseam',          placeholder: '30', unit: 'in', required: false, hint: 'Crotch to ankle (inner seam)' },
+    { title: 'Pyjama / Salwar Measurements', fields: [
+      { key: 'pantLength', label: 'Length (Custom)', placeholder: '42', unit: 'in', required: true, hint: 'Waist to ankle' },
+      { key: 'waist',      label: 'Waist',           placeholder: '34', unit: 'in', required: true, hint: 'Natural waistline' },
+      { key: 'thigh',      label: 'Thigh',           placeholder: '22', unit: 'in', required: true, hint: 'Upper thigh circumference' },
+      { key: 'knee',       label: 'Knee',            placeholder: '16', unit: 'in', required: true, hint: 'Circumference around knee' },
+      { key: 'ankle',      label: 'Ankle',           placeholder: '13', unit: 'in', required: true, hint: 'Circumference around ankle' },
+      { key: 'rise',       label: 'Rise / Kirtha',   placeholder: '11', unit: 'in', required: true, hint: 'Full length from front waistband center down through crotch to back waistband center' },
+      { key: 'inseam',     label: 'Inseam',          placeholder: '30', unit: 'in', required: true, hint: 'Crotch to ankle (inner seam)' },
     ]},
   ],
 
   // Suit — Jacket (same as Jodhpuri) + Trouser (same as Pant)
   suit: [
-    { title: 'General (Optional)', fields: [
+    { title: 'General Info (Optional)', fields: [
       { key: 'height', label: 'Height', placeholder: '175', unit: 'cm', required: false },
       { key: 'weight', label: 'Weight', placeholder: '72',  unit: 'kg', required: false },
     ]},
@@ -325,22 +325,22 @@ const GARMENT_MEASUREMENTS: Record<string, MeasurementSection[]> = {
       { key: 'hips',         label: 'Hip / Seat',       placeholder: '38', unit: 'in', required: true,  hint: 'Fullest part of seat' },
       { key: 'neck',         label: 'Collar / Neck',    placeholder: '15', unit: 'in', required: true,  hint: 'Around base of neck' },
       { key: 'shoulderLength', label: 'Shoulder Length', placeholder: '18', unit: 'in', required: true,  hint: 'Across the back from shoulder point to shoulder point' },
-      { key: 'bicep',        label: 'Bicep',            placeholder: '14', unit: 'in', required: false, hint: 'Upper arm circumference' },
+      { key: 'bicep',        label: 'Bicep',            placeholder: '14', unit: 'in', required: true, hint: 'Upper arm circumference' },
     ]},
     { title: 'Trouser Measurements', fields: [
       { key: 'pantLength', label: 'Length (Custom)', placeholder: '42', unit: 'in', required: true,  hint: 'Waist to ankle (outseam)' },
       { key: 'waist',      label: 'Waist',           placeholder: '34', unit: 'in', required: true,  hint: 'Natural waistline' },
-      { key: 'thigh',      label: 'Thigh',           placeholder: '22', unit: 'in', required: false, hint: 'Upper thigh circumference' },
-      { key: 'knee',       label: 'Knee',            placeholder: '16', unit: 'in', required: false, hint: 'Circumference around knee' },
-      { key: 'ankle',      label: 'Ankle',           placeholder: '13', unit: 'in', required: false, hint: 'Circumference around ankle' },
-      { key: 'rise',       label: 'Rise / Kirtha',   placeholder: '11', unit: 'in', required: false, hint: 'Full length from front waistband center down through crotch to back waistband center' },
-      { key: 'inseam',     label: 'Inseam',          placeholder: '30', unit: 'in', required: false, hint: 'Crotch to ankle (inner seam)' },
+      { key: 'thigh',      label: 'Thigh',           placeholder: '22', unit: 'in', required: true, hint: 'Upper thigh circumference' },
+      { key: 'knee',       label: 'Knee',            placeholder: '16', unit: 'in', required: true, hint: 'Circumference around knee' },
+      { key: 'ankle',      label: 'Ankle',           placeholder: '13', unit: 'in', required: true, hint: 'Circumference around ankle' },
+      { key: 'rise',       label: 'Rise / Kirtha',   placeholder: '11', unit: 'in', required: true, hint: 'Full length from front waistband center down through crotch to back waistband center' },
+      { key: 'inseam',     label: 'Inseam',          placeholder: '30', unit: 'in', required: true, hint: 'Crotch to ankle (inner seam)' },
     ]},
   ],
 
   // ⑥ Indo Western — 3 articles: Outside Open Coat + Kurta + Pyjama
   'indo-western': [
-    { title: 'General (Optional)', fields: [
+    { title: 'General Info (Optional)', fields: [
       { key: 'height', label: 'Height', placeholder: '175', unit: 'cm', required: false },
       { key: 'weight', label: 'Weight', placeholder: '72',  unit: 'kg', required: false },
     ]},
@@ -352,7 +352,7 @@ const GARMENT_MEASUREMENTS: Record<string, MeasurementSection[]> = {
       { key: 'hips',           label: 'Hip / Seat',        placeholder: '38', unit: 'in', required: true,  hint: 'Fullest part of seat' },
       { key: 'neck',           label: 'Collar / Neck',     placeholder: '15', unit: 'in', required: true,  hint: 'Around base of neck' },
       { key: 'shoulderLength', label: 'Shoulder Length',   placeholder: '18', unit: 'in', required: true,  hint: 'Across the back from shoulder point to shoulder point' },
-      { key: 'bicep',          label: 'Bicep',             placeholder: '14', unit: 'in', required: false, hint: 'Upper arm circumference' },
+      { key: 'bicep',          label: 'Bicep',             placeholder: '14', unit: 'in', required: true, hint: 'Upper arm circumference' },
     ]},
     { title: 'Kurta (same as Shirt)', fields: [
       { key: 'shirtLength', label: 'Kurta Length', placeholder: '36', unit: 'in', required: true,
@@ -361,11 +361,11 @@ const GARMENT_MEASUREMENTS: Record<string, MeasurementSection[]> = {
     { title: 'Pyjama (same as Pant)', fields: [
       { key: 'pantLength', label: 'Length (Custom)', placeholder: '42', unit: 'in', required: true,  hint: 'Waist to ankle (outseam)' },
       { key: 'waist',      label: 'Waist',           placeholder: '34', unit: 'in', required: true,  hint: 'Natural waistline' },
-      { key: 'thigh',      label: 'Thigh',           placeholder: '22', unit: 'in', required: false, hint: 'Upper thigh circumference' },
-      { key: 'knee',       label: 'Knee',            placeholder: '16', unit: 'in', required: false, hint: 'Circumference around knee' },
-      { key: 'ankle',      label: 'Ankle',           placeholder: '13', unit: 'in', required: false, hint: 'Circumference around ankle' },
-      { key: 'rise',       label: 'Rise / Kirtha',   placeholder: '11', unit: 'in', required: false, hint: 'Full length from front waistband center down through crotch to back waistband center' },
-      { key: 'inseam',     label: 'Inseam',          placeholder: '30', unit: 'in', required: false, hint: 'Crotch to ankle (inner seam)' },
+      { key: 'thigh',      label: 'Thigh',           placeholder: '22', unit: 'in', required: true, hint: 'Upper thigh circumference' },
+      { key: 'knee',       label: 'Knee',            placeholder: '16', unit: 'in', required: true, hint: 'Circumference around knee' },
+      { key: 'ankle',      label: 'Ankle',           placeholder: '13', unit: 'in', required: true, hint: 'Circumference around ankle' },
+      { key: 'rise',       label: 'Rise / Kirtha',   placeholder: '11', unit: 'in', required: true, hint: 'Full length from front waistband center down through crotch to back waistband center' },
+      { key: 'inseam',     label: 'Inseam',          placeholder: '30', unit: 'in', required: true, hint: 'Crotch to ankle (inner seam)' },
     ]},
   ],
 };
@@ -1035,6 +1035,21 @@ function CustomizePageInner() {
     setStep(3);
   };
 
+  const handleProceedFromDetails = () => {
+    const missing = [];
+    if (!customerName.trim()) missing.push('Your Name');
+    if (!customerPhone.trim()) missing.push('Your Phone Number');
+
+    if (missing.length > 0) {
+      showToast(
+        'Please enter your contact details before proceeding:',
+        missing
+      );
+      return;
+    }
+    setStep(5);
+  };
+
   const canProceedStep1   = garment !== '';
   const isStep3Complete   = images.some(img => img.file !== null);
   const activeSections    = garment ? (GARMENT_MEASUREMENTS[garment] || []) : [];
@@ -1267,7 +1282,6 @@ function CustomizePageInner() {
                           <div key={field.key} className="form-group">
                             <label className="form-label">
                               {field.label}
-                              {field.required && <span className={styles.reqStar}> *</span>}
                               <span className={styles.unitBadge}>{field.unit}</span>
                             </label>
                             <input
@@ -1628,7 +1642,7 @@ function CustomizePageInner() {
                   value={customerPhone} onChange={e => setCustomerPhone(e.target.value)} />
               </div>
               <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                <label className="form-label">Select Fabric Swatch *</label>
+                <label className="form-label">Select Fabric Swatch</label>
                 {availableSwatches.length === 0 ? (
                   <div style={{ padding: 16, background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius)', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
                     No fabric swatches available for this category. You can write your custom preference in the design notes below.
@@ -1660,7 +1674,7 @@ function CustomizePageInner() {
               {/* Add-on Fabric Swatches */}
               {garment === 'suit' && suitAddShirt && (
                 <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                  <label className="form-label">Select Shirt Fabric Swatch *</label>
+                  <label className="form-label">Select Shirt Fabric Swatch</label>
                   {availableShirtSwatches.length === 0 ? (
                     <div style={{ padding: 16, background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius)', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
                       No fabric swatches available for Shirts. You can write your custom preference in the design notes below.
@@ -1691,7 +1705,7 @@ function CustomizePageInner() {
 
               {garment === 'modi-coat' && modiAddKurti && (
                 <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                  <label className="form-label">Select Kurti Fabric Swatch *</label>
+                  <label className="form-label">Select Kurti Fabric Swatch</label>
                   {availableKurtiSwatches.length === 0 ? (
                     <div style={{ padding: 16, background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius)', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
                       No fabric swatches available for Kurti. You can write your custom preference in the design notes below.
@@ -1722,7 +1736,7 @@ function CustomizePageInner() {
 
               {garment === 'modi-coat' && modiAddPyjama && (
                 <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                  <label className="form-label">Select Pyjama Fabric Swatch *</label>
+                  <label className="form-label">Select Pyjama Fabric Swatch</label>
                   {availablePyjamaSwatches.length === 0 ? (
                     <div style={{ padding: 16, background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius)', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
                       No fabric swatches available for Pyjama. You can write your custom preference in the design notes below.
@@ -1753,7 +1767,7 @@ function CustomizePageInner() {
 
               {garment === 'kurta' && kurtiAddPyjama && (
                 <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                  <label className="form-label">Select Pyjama Fabric Swatch *</label>
+                  <label className="form-label">Select Pyjama Fabric Swatch</label>
                   {availablePyjamaSwatches.length === 0 ? (
                     <div style={{ padding: 16, background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius)', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
                       No fabric swatches available for Pyjama. You can write your custom preference in the design notes below.
@@ -1782,7 +1796,7 @@ function CustomizePageInner() {
                 </div>
               )}
               <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                <label className="form-label">Required By Date *</label>
+                <label className="form-label">Required By Date</label>
                 <input
                   className="form-input"
                   type="date"
@@ -1805,7 +1819,7 @@ function CustomizePageInner() {
               <button className="btn btn-outline" onClick={() => setStep(3)}>
                 <FiArrowLeft /> Back
               </button>
-              <button className="btn btn-primary" onClick={() => setStep(5)}>
+              <button className="btn btn-primary" onClick={handleProceedFromDetails}>
                 Review Order <FiArrowRight />
               </button>
             </div>
